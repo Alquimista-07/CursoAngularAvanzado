@@ -1,0 +1,139 @@
+COMANDOS ANGULAR CLI
+
+NOTA: El siguiente enlace nos dirige a la documentación oficial de Angular CLI: https://angular.io/cli
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear una aplicación de Angular
+-----------------------------------------------------------------------------------------------------------
+
+	ng new nombreAplicacion
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite levantar el servidor de angular y ejecutar la aplicación
+-----------------------------------------------------------------------------------------------------------
+
+	ng serve
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite levantar el servidor de angular, ejecutar la aplicación y abrir
+  automáticamente el navegador
+-----------------------------------------------------------------------------------------------------------
+
+	ng serve -o
+
+-----------------------------------------------------------------------------------------------------------
+* En el siguiente comando al indicar el --dry-run lo que va a hacer es ejecutar una simulación de la 
+  ejecución de ese comando y me va a mostrar en la consola los archivos que se van a crear y que se van a
+  modificar
+-----------------------------------------------------------------------------------------------------------
+
+	ng g s directorio/nombreServicio --dry-run   -> Esta es el comando completo
+	ng g s directorio/nombreServicio -d          -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un componente
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate component nombreComponente       -> Esta es el comando completo
+	ng g c nombreComponente                      -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un componente en un directorio en específico
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate component directorio/nombreComponente      -> Este es el comando completo
+	ng g c directorio/nombreComponente                     -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un componente obviando que me cree el archivo de pruebas
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate component nombreComponente --skipTests     -> Este es el comando completo
+	ng g c nombreComponente --skipTests                    -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un componente obviando que me cree el archivo de pruebas
+  y lo coloque en un directorio en específico
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate component directorio/nombreComponente --skipTests     -> Este es el comando completo
+	ng g c directorio/nombreComponente --skipTests                    -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un modulo
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate module nombreModulo    -> Este es el comando completo
+	ng g m nombreModulo                -> Esta es la forma corta
+
+	************************************************************************************************
+	NOTA: OJO si quiero empaquetar en modulos los componentes y que se agreguen automaticamente
+	      en el modulo tengo que crear primero el modulo y luego si crear los componente haciendo
+	      referencia a la ruta del modulo.
+	************************************************************************************************
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite generar la versión de producción
+-----------------------------------------------------------------------------------------------------------
+
+	ng build --prod
+	npm run build         -> Esta es otra forma de generar la compilación de producción.
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite generar un servicio
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate service nombreServicio           -> Este es el comando completo
+	ng g s nombreServicio                        -> Esta es la forma corta
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite generar un servicio en un directorio especifico
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate service ruta/nombreServicio      -> Este es el comando completo
+	ng g s directorio/nombreServicio             -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear el modulo router para el manejo de rutas. Adicionalmente al agregar 
+  el --flat se evita que se cree una carpeta con el nombre del modulo.
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate module nombreModulo --flat      -> Este es el comando completo
+	ng g m nombreModulo --flat                  -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un pipe en una ruta específica y sin archivo de pruebas. Esto para 
+  cuando creamos nuestros pipes personalizados.
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate pipe directorio/nombrePipe --skipTests     -> Este es el comando completo
+	ng g p directorio/nombrePipe --skipTests               -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un guard en una ruta específica y sin archivo de pruebas.
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate guard directorio/nombreGuard --skipTests        -> Este es el comando completo
+	ng g guard directorio/nombreGuard --skipTests               -> Esta es la forma corta
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite ver la ayuda por ejemplo de los modulos con los comandos adicionales o
+  banderas que podemos agregar para que por ejemplo nos genere el modulo con el modulo de rutas de forma
+  automática.
+-----------------------------------------------------------------------------------------------------------
+
+	ng g m --help
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear un modulo con su respectivo archivo de rutas.
+-----------------------------------------------------------------------------------------------------------
+
+	ng g m nombreModulo --routing
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite crear una directiva y colocarla en una ruta específica y sin archivo de 
+  pruebas. Adicionalmente si queremos el archivo de pruebas solo no le agregamos el --skipTests al comando
+-----------------------------------------------------------------------------------------------------------
+
+	ng generate directive directorio/nombreDirectiva --skipTests        -> Este es el comando completo
+	ng g d directorio/nombreDirectiva --skipTests                       -> Esta es la forma corta

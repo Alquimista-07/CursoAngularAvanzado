@@ -6,35 +6,44 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
+import { PagesComponent } from './pages/pages.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    component: DashboardComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
+    path: '',
+    component: PagesComponent,
+    children: [
+      
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'progress',
+        component: ProgressComponent
+      },
+      {
+        path: 'grafica1',
+        component: Grafica1Component
+      },
+      {
+        // Esto me ayuda que si estoy en la ruta con el path vacío me va a 
+        // redireccionar automáticamente al dashboard
+        path: '',
+        redirectTo: '/dashboard', 
+        pathMatch: 'full' 
+      }
+
+    ]
   },
   {
     path: 'register',
     component: RegisterComponent
   },
   {
-    path: 'progress',
-    component: ProgressComponent
-  },
-  {
-    path: 'grafica1',
-    component: Grafica1Component
-  },
-  {
-    // Esto me ayuda que si estoy en la ruta con el path vacío me va a 
-    // redireccionar automáticamente al dashboard
-    path: '',
-    redirectTo: '/dashboard', 
-    pathMatch: 'full' 
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '**',

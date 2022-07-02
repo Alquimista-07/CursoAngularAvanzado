@@ -13,6 +13,13 @@ const routes: Routes = [
   // path: '/dashboard' PagesRouting
   // path: '/auth' AuthRoutingModule
   {
+    // Esto me ayuda que si estoy en la ruta con el path vacío me va a 
+    // redireccionar automáticamente al dashboard
+    path: '',
+    redirectTo: '/dashboard', 
+    pathMatch: 'full' 
+  },
+  {
     path: '**',
     component: NopagefoundComponent
   }

@@ -8,12 +8,12 @@ import { Grafica1Component } from './grafica1/grafica1.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'dashboard',
         component: PagesComponent,
         children: [
           
           {
-            path: 'dashboard',
+            path: '',
             component: DashboardComponent
           },
           {
@@ -23,13 +23,6 @@ const routes: Routes = [
           {
             path: 'grafica1',
             component: Grafica1Component
-          },
-          {
-            // Esto me ayuda que si estoy en la ruta con el path vacío me va a 
-            // redireccionar automáticamente al dashboard
-            path: '',
-            redirectTo: '/dashboard', 
-            pathMatch: 'full' 
           }
     
         ]

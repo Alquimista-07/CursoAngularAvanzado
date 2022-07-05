@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-incrementador',
@@ -6,9 +6,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styles: [
   ]
 })
-export class IncrementadorComponent {
+export class IncrementadorComponent implements OnInit {
+
+
+  ngOnInit() {
+    this.btnClass = `btn ${this.btnClass}`;
+  }
 
   @Input('valorProgreso') progreso: number = 50;
+  @Input() btnClass: string = 'btn-primary';
 
   // Con el output escuchamos cambios que el componente incrementador va a poder emitir
   // Adicionalmente estos @Output usuarlmente son de tipo eventEmiter, es decir una fucnión

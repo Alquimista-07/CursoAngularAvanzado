@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-incrementador',
@@ -10,17 +10,26 @@ export class IncrementadorComponent {
 
   @Input('valorProgreso') progreso: number = 50;
 
-  cambiarValor( valor: number ): number {
+  // Con el output escuchamos cambios que el componente incrementador va a poder emitir
+  // Adicionalmente estos @Output usuarlmente son de tipo eventEmiter, es decir una fucnión
+  // que el componente padre va a poder ejecutar
+  @Output('valorProgreso') valorSalida: EventEmitter<number> = new EventEmitter();
+
+  cambiarValor( valor: number ) {
 
     if( this.progreso >= 100 && valor >= 0 ){
+      this.valorSalida.emit( 100 );
       return this.progreso = 100
     }
-
+    
     if( this.progreso <= 0 && valor <= 0 ){
+      this.valorSalida.emit( 0 );
       return this.progreso = 0
     }
     
-    return this.progreso = this.progreso + valor;
+    
+    this.progreso = this.progreso + valor;
+    return this.valorSalida.emit( this.progreso )
 
   }
 

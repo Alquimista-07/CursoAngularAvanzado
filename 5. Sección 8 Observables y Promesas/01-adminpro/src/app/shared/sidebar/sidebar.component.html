@@ -34,9 +34,13 @@
                         </span>
                     </a>
 
+                    <!--Ajustamos el menu para que el link quede activa y adionalmente sea exacto ya que en si el main queda activo porque
+                        en si concuerda con la ruta pero del todo no es cierto, por lo tanto agregamos el routerLinkActiveOptions -->
                     <ul aria-expanded="false" class="collapse">
                         <li *ngFor="let subMenuItem of item.submenu">
-                            <a [routerLink]="subMenuItem.url">
+                            <a [routerLink]="subMenuItem.url"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }">
                                 {{ subMenuItem.titulo }} 
                             </a>
                         </li>

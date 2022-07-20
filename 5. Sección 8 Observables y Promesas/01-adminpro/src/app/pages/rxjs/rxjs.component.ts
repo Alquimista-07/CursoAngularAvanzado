@@ -12,10 +12,29 @@ export class RxjsComponent {
 
   constructor() { 
 
+    // Nos subscribimos al observable
+    // Implementamos el rety el cual permite relanzar el observable cuantas veces creamos necesario
+    // y de esta manera reintentar la ejecución de un bloque de codigo que pudo fallar por algún motivo
+    this.retornaObservable().pipe(
+      // retry() // Intenta infinitas veces
+      retry(2) // Reintenta 2 veces
+    ).subscribe(
+      valor => console.log('Subs', valor),
+      // Cunado se complete hacemos algo
+      (error) => console.error('Error: ', error),
+      () => console.info('Obs Completado')
+      
+    );
+
+  }
+
+  // Creamos un método que regrese un observable
+  retornaObservable(): Observable<number> {
+
     let i = -1;
 
     // Creamos un observable de manera manual
-    const obs$ = new Observable( observer => {
+    return new Observable<number>( observer => {
 
       const intervalo = setInterval( () =>{
 
@@ -40,20 +59,6 @@ export class RxjsComponent {
       }, 1000 );
 
     });
-
-    // Nos subscribimos al observable
-    // Implementamos el rety el cual permite relanzar el observable cuantas veces creamos necesario
-    // y de esta manera reintentar la ejecución de un bloque de codigo que pudo fallar por algún motivo
-    obs$.pipe(
-      // retry() // Intenta infinitas veces
-      retry(2) // Reintenta 2 veces
-    ).subscribe(
-      valor => console.log('Subs', valor),
-      // Cunado se complete hacemos algo
-      (error) => console.error('Error: ', error),
-      () => console.info('Obs Completado')
-      
-    );
 
   }
 

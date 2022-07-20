@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { Observable, interval } from 'rxjs';
+import { map, retry, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -25,6 +25,24 @@ export class RxjsComponent {
       () => console.info('Obs Completado')
       
     );
+
+    this.retornaIntervalo()
+        .subscribe(
+          (valor) => console.log( 'valor: ', valor )
+        )
+
+  }
+
+  // Cremos un metodo el cual es un observable con un intervalo usando rxjs
+  retornaIntervalo(): Observable<number | string> {
+
+    return interval(1000)
+           .pipe(
+             take(10),
+             // map( valor => { return valor + 1 } )
+             // map( valor => valor + 1 )
+             map( valor => { return 'Hola Mundo!!!... ' + valor } )
+           );
 
   }
 

@@ -17,27 +17,47 @@ const routes: Routes = [
           
           {
             path: '',
-            component: DashboardComponent
+            component: DashboardComponent,
+            // Para este tema del breadcrums podemos enviar la data la cual es un objeto que recibe argumentos como por ejemplo el titulo,
+            // y demás información necesaria.
+            data: {
+              titulo: 'Dashboard'
+            }
           },
           {
             path: 'progress',
-            component: ProgressComponent
+            component: ProgressComponent,
+            data: {
+              titulo: 'ProgressBar'
+            }
           },
           {
             path: 'grafica1',
-            component: Grafica1Component
+            component: Grafica1Component,
+            data: {
+              titulo: 'Grafica #1'
+            }
           },
           {
             path: 'account-settings',
-            component: AccountSettingsComponent
+            component: AccountSettingsComponent,
+            data: {
+              titulo: 'Ajustes de cuenta'
+            }
           },
           {
             path: 'promesas',
-            component: PromesasComponent
+            component: PromesasComponent,
+            data: {
+              titulo: 'Promesas'
+            }
           },
           {
             path: 'rxjs',
-            component: RxjsComponent
+            component: RxjsComponent,
+            data: {
+              titulo: 'Rxjs'
+            }
           }
     
         ]

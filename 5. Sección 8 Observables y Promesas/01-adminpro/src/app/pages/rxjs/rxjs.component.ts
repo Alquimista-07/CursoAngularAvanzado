@@ -33,6 +33,8 @@ export class RxjsComponent {
 
   }
 
+  // NOTA: Más información sobre operadores de rxjs: https://reactivex.io/documentation/operators.html
+
   // Cremos un metodo el cual es un observable con un intervalo usando rxjs
   retornaIntervalo(): Observable<number | string> {
 

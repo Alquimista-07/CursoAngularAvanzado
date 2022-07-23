@@ -130,3 +130,9 @@ npm i mongoose
 ```
 npm i dotenv
 ```
+
+* A través del siguiente comando instalamos "cors" el cual es un paquete que nos va a permitir hacer peticiones Cross Domain, y esto es algo necesario si vamos a aceptar peticiones provenientes de otros dominios. 
+
+```
+npm i cors
+```

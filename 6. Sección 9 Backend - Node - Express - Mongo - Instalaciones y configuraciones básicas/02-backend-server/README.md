@@ -93,3 +93,25 @@ Y lo que le decimos es que cuando yo ejecute "npm run" le indicamos que ejecute 
 ```
 npm start
 ```
+
+Configuración Base De Datos MongoDB
+====================================
+
+Ahora es necesario realizar el registro y creación de la base de datos en MongoDB, no es necesario hacerlo con Mongo, se puede usar mysql, oracle, o cualquier otra base de datos pero para el caso del curso se usa MongoDB. Unas de las bondades que tiene esta base de datos es que es NoSQL y permite trabajar con documentos además de que es de código abiero, también la inserción y trabajo con los datos se hace de una forma muy parecida a como se trabaj con objetos en JavaScript, otra cosa es que al crearse en clusters es muy eficionte.
+Entonces para realizar la configuración seguimos los siguientes pasos:
+
+1. Inicialmente procedemos a crear una cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) y para ello debemos dar click en Try Free y crear la ya sea llenando el formulario o directamente con una cuenta de google.
+
+2. Posteriormente procedemos a crear nuestro cluster, el cual para el caso del curso va a ser gratuito, pero perfectamente se puede adquirir uno de pago. Adicionalmente podemos colocar un nombre al cluster que para el curso se llamo MiCluster, y posteriormente procedemos a dare click en crear cluster y esperamos a que el cluster sea creado.
+
+3. Luego en la página principal de Database procedemos a dar click en donde dice CONNECT.
+
+4. Luego procedemos a dar click en Add a connection IP y elegimos la ip o dejamos la que viene por defecto.
+
+5. Posteriormente es necesario crear un database user con su respectiva contraseña la cual se puede especificar o autogenerar. También podemos crear más usuarios haciendo click en Database Access.
+
+6. A continuación le damos en choose connection y se nos va a abrir una lista con las opciones, que en este caso vamos a usar MongoDB Compass y para ello seleccionamos dicha forma de conexión. También hay que tener en cuenta que si no se tiene instalado el programa MongoDB compass es necesario realizar la instalación.
+
+7. A continuación copiamos la cadena de conexión que se nos muestra y la usamos para crear una nueva variable de entorno en nuestro archivo .env en el cual tenemos que ajustar el nombre de la base de datos (que en este caso la llamé miBaseDatos), también es necesario especificar el usuario y la contraseña.
+
+8. El siguiente paso es tomar la cadena de conexión que ya teníamos con su respectivo usuario, contraseña y base de datos, para proceder a colocarla en el campo de conexión del programa mongodb compass y dar click en conectar.

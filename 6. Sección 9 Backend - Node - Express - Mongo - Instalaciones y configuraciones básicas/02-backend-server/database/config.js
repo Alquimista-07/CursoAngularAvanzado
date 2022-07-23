@@ -10,7 +10,7 @@ const dbConnection = async() => {
         
         // la función connect recibe la cadena de conexión, la cual la podemos definir en una variable de entorno.
         // Adicionalmente recibe un objeto con la configuración que en la página oficial de mongoose recomiendan
-        await mongoose.connect('mongodb+srv://mongoadmin2:Mongoadmin1234@micluster.vrh913w.mongodb.net/hospitaldb', {
+        await mongoose.connect( process.env.DB_CNN , {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             // useCreateIndex: true // Se comento ya que en el video colocan esta propiedad pero arroja error en consola y no conecta la DB

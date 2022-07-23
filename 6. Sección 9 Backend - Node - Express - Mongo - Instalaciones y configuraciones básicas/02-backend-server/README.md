@@ -124,3 +124,9 @@ Instalaciones necesarias para el backend
 ```
 npm i mongoose
 ```
+
+* A través del siguiente comando instalamos "dotenv" el cual es un paquete que sirve para configurar variables de entorno.
+
+```
+npm i dotenv
+```

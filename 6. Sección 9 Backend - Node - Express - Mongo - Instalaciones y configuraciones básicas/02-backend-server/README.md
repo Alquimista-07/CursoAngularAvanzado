@@ -115,3 +115,12 @@ Entonces para realizar la configuración seguimos los siguientes pasos:
 7. A continuación copiamos la cadena de conexión que se nos muestra y la usamos para crear una nueva variable de entorno en nuestro archivo .env en el cual tenemos que ajustar el nombre de la base de datos (que en este caso la llamé miBaseDatos), también es necesario especificar el usuario y la contraseña.
 
 8. El siguiente paso es tomar la cadena de conexión que ya teníamos con su respectivo usuario, contraseña y base de datos, para proceder a colocarla en el campo de conexión del programa mongodb compass y dar click en conectar.
+
+Instalaciones necesarias para el backend
+=========================================
+
+* A través del siguiente comando instalamos "mongoose" el cual es un ORM que nos va a servir para interactuar y realizar la comunicación, conexión y trabajo con la base de datos MongoDB.
+
+```
+npm i mongoose
+```

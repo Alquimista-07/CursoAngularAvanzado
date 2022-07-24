@@ -36,6 +36,9 @@ const app = express();
 //       manera:
 app.use( cors() );
 
+// Lectura y parseo del body
+app.use( express.json() );
+
 // Base de datos
 dbConnection();
 

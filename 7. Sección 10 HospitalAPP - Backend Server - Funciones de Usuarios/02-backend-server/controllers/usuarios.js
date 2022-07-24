@@ -6,11 +6,14 @@ const Usuario = require('../models/usuario');
 //       y que continen la logica que vamos a necesitar para gestionar los usuarios
 
 // Obtener usuarios
-const getUsuarios = (req, res) => {
+const getUsuarios = async(req, res) => {
+
+    // Como parametro del find podemos mandar {} para especificar un filtro y solo mostrar lo que quiero
+    const usuarios = await Usuario.find({}, 'nombre email role google');
 
     res.json({
         ok: true,
-        msg: 'get Usuarios'
+        usuarios
     });
 
 }

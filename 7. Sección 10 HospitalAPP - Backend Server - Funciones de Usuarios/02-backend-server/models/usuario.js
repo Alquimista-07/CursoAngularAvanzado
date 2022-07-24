@@ -37,5 +37,16 @@ const UsuarioSchema = Schema({
 
 });
 
+// Configuramos para que el _id que crea mongo se muestre de una manera personalizada como lo queremos
+// y esto lo hacemos sobreescribiendo el metodo.
+// NOTA: Cabe resaltar que esto que se hace afecta visualmente y no directamente en la base de datos, adicionalmente
+//       esto es de manera global, es decir en todo lado donde tengamos ese id va a aparecer como uid
+UsuarioSchema.method('toJSON', function() {
+    // Extraemos la versión, el id y el resto del objeto
+    const { __v, _id, ...object } = this.toObject();
+    object.uid = _id;
+    return object;
+});
+
 // Implementamos el modelo
 module.exports = model( 'Usuario', UsuarioSchema );

@@ -40,15 +40,8 @@ app.use( cors() );
 dbConnection();
 
 // Rutas
-app.get('/', (req, res) => {
-
-    res.json({
-        ok: true,
-        msg: 'Hola Mundo!!!...'
-    })
-
-});
-
+// Usamos un middleware para las rutas las cuales se manejan con su respectiva ruta y controlador
+app.use( '/api/usuarios', require('./routes/usuarios') );
 
 // Para levantar el servidor
 app.listen( process.env.PORT, () =>{

@@ -3,6 +3,9 @@
 // Importamos para definir el tipo de la response
 const { response } = require('express');
 
+// Importamos el validador de express
+const { validationResult } = require('express-validator');
+
 const Usuario = require('../models/usuario');
 
 // NOTA: Basicamente dentro de este archivo tenemos funciones que vamos a exportar
@@ -26,6 +29,18 @@ const crearUsuario = async(req, res = response) => {
 
     // Leemos el body para recibir información a través del body
     const { nombre, password, email } = req.body;
+
+    // Atrapamos los errores enviados desde el middleware, para ello creamos el
+    // arreglo de errores
+    const errores = validationResult( req );
+    console.log('errores: ', errores);
+
+    if( !errores.isEmpty() ) {
+        return res.status(400).json({
+            ok: false,
+            errors: errores.mapped()
+        });
+    }
 
     // Validamos si el usuario existe
     try {

@@ -136,3 +136,9 @@ npm i dotenv
 ```
 npm i cors
 ```
+
+* A través del siguiente comando instalamos el "express-validator" el cual es un paquete que nos sirve para hacer validaciones en express por ejemplo de que los campos tengan la información que se necesita.
+
+```
+npm i express-validator
+```

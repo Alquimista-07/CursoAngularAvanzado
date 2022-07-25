@@ -6,6 +6,8 @@
 const { Router } = require('express');
 // Importamos el validador de express
 const { check } = require('express-validator');
+// Importamos el middleware personalizado para validar campos
+const { validarCampos } = require('../middlewares/validar-campos');
 // Importamos controladores de usuarios
 const { getUsuarios, crearUsuario } = require('../controllers/usuarios');
 
@@ -28,7 +30,9 @@ router.post( '/',
     [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'El email es obligatorio').isEmail(),
-        check('password', 'La contraseña es obligatoria').not().isEmpty()
+        check('password', 'La contraseña es obligatoria').not().isEmpty(),
+        // Agragamos el middleware personalizado para otimizar el código de errors que tenemos en los controladores
+        validarCampos
     ], 
     crearUsuario );
 

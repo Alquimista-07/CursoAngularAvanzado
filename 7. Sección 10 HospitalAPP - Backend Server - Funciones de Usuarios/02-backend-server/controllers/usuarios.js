@@ -1,5 +1,8 @@
 // Controladores de usuarios
 
+// Importamos para definir el tipo de la response
+const { response } = require('express');
+
 const Usuario = require('../models/usuario');
 
 // NOTA: Basicamente dentro de este archivo tenemos funciones que vamos a exportar
@@ -19,20 +22,41 @@ const getUsuarios = async(req, res) => {
 }
 
 // Crear usuario
-const crearUsuario = async(req, res) => {
+const crearUsuario = async(req, res = response) => {
 
     // Leemos el body para recibir información a través del body
     const { nombre, password, email } = req.body;
 
-    // Creamos una instancia del modelo con las propiedades
-    const usuario = new Usuario( req.body );
+    // Validamos si el usuario existe
+    try {
 
-    await usuario.save();
+        const existeEmail = await Usuario.findOne({ email });
 
-    res.json({
-        ok: true,
-        usuario
-    });
+        if( existeEmail ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El correo ya se encuentra registrado'
+            })
+        }
+
+        // Creamos una instancia del modelo con las propiedades
+        const usuario = new Usuario( req.body );
+    
+        await usuario.save();
+    
+        res.json({
+            ok: true,
+            usuario
+        });
+
+    }
+    catch (error){
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado... revisar logs'
+        })
+    }
 
 }
 

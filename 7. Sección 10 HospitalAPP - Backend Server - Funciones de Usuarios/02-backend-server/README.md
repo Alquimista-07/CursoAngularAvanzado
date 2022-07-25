@@ -97,7 +97,7 @@ npm start
 Configuración Base De Datos MongoDB
 ====================================
 
-Ahora es necesario realizar el registro y creación de la base de datos en MongoDB, no es necesario hacerlo con Mongo, se puede usar mysql, oracle, o cualquier otra base de datos pero para el caso del curso se usa MongoDB. Unas de las bondades que tiene esta base de datos es que es NoSQL y permite trabajar con documentos además de que es de código abiero, también la inserción y trabajo con los datos se hace de una forma muy parecida a como se trabaj con objetos en JavaScript, otra cosa es que al crearse en clusters es muy eficionte.
+Ahora es necesario realizar el registro y creación de la base de datos en MongoDB, no es necesario hacerlo con Mongo, se puede usar mysql, oracle, o cualquier otra base de datos pero para el caso del curso se usa MongoDB. Unas de las bondades que tiene esta base de datos es que es NoSQL y permite trabajar con documentos además de que es de código abiero, también la inserción y trabajo con los datos se hace de una forma muy parecida a como se trabaja con objetos en JavaScript, otra cosa es que al crearse en clusters es muy eficiente.
 Entonces para realizar la configuración seguimos los siguientes pasos:
 
 1. Inicialmente procedemos a crear una cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) y para ello debemos dar click en Try Free y crear la ya sea llenando el formulario o directamente con una cuenta de google.

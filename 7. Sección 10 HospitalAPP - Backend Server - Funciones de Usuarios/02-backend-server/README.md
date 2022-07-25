@@ -142,3 +142,17 @@ npm i cors
 ```
 npm i express-validator
 ```
+
+* A través del siguiente comando instalamos el "bcryptjs" el cual es un paquete que va a permitir encriptar y hacer hash de una sola vía de las contraseñas para que nadie aunque tenga el código hash no lo va a poder reconstruir.
+
+```
+npm i bcryptjs
+```
+
+### NOTA:
+
+* Adicionalmente si necesitamos instalar una versión específica de un paquete lo podemos hacer indicando un @ seguido de la versión a instalar. Un ejemplo sería el siguiente:
+
+```
+npm i express@4.17.1
+```

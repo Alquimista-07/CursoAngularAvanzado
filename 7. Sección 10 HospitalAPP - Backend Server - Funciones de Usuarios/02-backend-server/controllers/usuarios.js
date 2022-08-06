@@ -95,22 +95,16 @@ const actualizarUsuario = async( req, res = response ) => {
 
         // Entonces acá paso la validación por lo tanto existe
         // Actualizaciones
-        // Borramos o quitamos los campos que no quiero actualizar de lo que me envian en el body
-        // ya que campos es un objeto.
-        // NOTA: Puedo borrar todo lo que yo no quiera grabar en la base de datos siempre y cuando eso que quiero
-        //       borrar exista en el modelo de mongoose
-        const campos = req.body;
+        
+        const { password, google, email, ...campos } = req.body;
 
         // Validamos si no se esta actualizando el email para eliminarlo ya que no se esta actualizando
-        if( usuarioDB.email === req.body.email ){
-            delete campos.email;
-        }
-        else {
-
+        if( usuarioDB.email !== email ){
+            
             // Verificamos que no exista un usuario con ese correo electronico ya que 
             // no se podría actualizar ya que choca con la validación de campo unico
             // y con esto controlamos esa excepción
-            const existeEmail = await Usuario.findOne({ email: req.body.email });
+            const existeEmail = await Usuario.findOne({ email });
             if( existeEmail ){
                 return res.status(400).json({
                     ok: false,
@@ -120,8 +114,21 @@ const actualizarUsuario = async( req, res = response ) => {
 
         }
         
-        delete campos.password;
-        delete campos.google;
+        campos.email = email;
+
+        //----------------------------------------------------------------------------------------------------
+        // NOTA: Esto se comento pero es una forma de borrar campos ya que se reemplazo por la desestructuración
+        //       para optimizar el código
+        //----------------------------------------------------------------------------------------------------
+        // Borramos o quitamos los campos que no quiero actualizar de lo que me envian en el body
+        // ya que campos es un objeto.
+        // NOTA: Puedo borrar todo lo que yo no quiera grabar en la base de datos siempre y cuando eso que quiero
+        //       borrar exista en el modelo de mongoose
+        //
+        // delete campos.password;
+        // delete campos.google;
+        //
+        //----------------------------------------------------------------------------------------------------
 
         // Por lo tanto enviamos el id a actualizar, el valor de los campos que estamos actualizando, e indicamos
         // como un tercer parámetro indicando el new en true para que nos muestre la información por la cual se actualizao

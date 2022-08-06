@@ -100,7 +100,7 @@ const actualizarUsuario = async( req, res = response ) => {
 
         // Validamos si no se esta actualizando el email para eliminarlo ya que no se esta actualizando
         if( usuarioDB.email !== email ){
-            
+
             // Verificamos que no exista un usuario con ese correo electronico ya que 
             // no se podría actualizar ya que choca con la validación de campo unico
             // y con esto controlamos esa excepción
@@ -152,9 +152,46 @@ const actualizarUsuario = async( req, res = response ) => {
 
 }
 
+const borrarUsuario = async( req, res = response ) => {
+
+    // Obtenemos el uid
+    const uid = req.params.id;
+
+    // Validamos si existe el usuario
+    const usuarioDB = await Usuario.findById( uid );
+
+    if( !usuarioDB ) {
+        return res.status(404).json({
+            ok: false,
+            msg: 'No existe un usuario por ese id'
+        });
+    }
+
+    // Si existe lo borramos
+    await Usuario.findByIdAndDelete( uid );
+
+    try {
+
+        res.json({
+            ok: true,
+            msg: 'Usuario eliminado'
+        });
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Algo salió mal hable con el administrador'
+        })
+    }
+
+}
+
 // Exportamos
 module.exports = {
     getUsuarios,
     crearUsuario,
-    actualizarUsuario
+    actualizarUsuario,
+    borrarUsuario
 }

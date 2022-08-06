@@ -46,6 +46,8 @@ dbConnection();
 // Usamos un middleware para las rutas las cuales se manejan con su respectiva ruta y controlador
 app.use( '/api/usuarios', require('./routes/usuarios') );
 
+app.use( '/api/login', require('./routes/auth') );
+
 // Para levantar el servidor
 app.listen( process.env.PORT, () =>{
     console.log( 'Servidor corriendo en puerto ' + process.env.PORT );

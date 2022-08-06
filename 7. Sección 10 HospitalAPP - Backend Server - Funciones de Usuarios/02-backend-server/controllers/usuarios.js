@@ -74,8 +74,80 @@ const crearUsuario = async(req, res = response) => {
 
 }
 
+const actualizarUsuario = async( req, res = response ) => {
+
+    // TODO: Validar token y comprobar si el usuario es el correcto
+
+    // Obtenemos el uid
+    const uid = req.params.id;
+
+    try {
+
+        // Validamos si existe
+        const usuarioDB = await Usuario.findById( uid );
+
+        if( !usuarioDB ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario por ese id'
+            });
+        }
+
+        // Entonces acá paso la validación por lo tanto existe
+        // Actualizaciones
+        // Borramos o quitamos los campos que no quiero actualizar de lo que me envian en el body
+        // ya que campos es un objeto.
+        // NOTA: Puedo borrar todo lo que yo no quiera grabar en la base de datos siempre y cuando eso que quiero
+        //       borrar exista en el modelo de mongoose
+        const campos = req.body;
+
+        // Validamos si no se esta actualizando el email para eliminarlo ya que no se esta actualizando
+        if( usuarioDB.email === req.body.email ){
+            delete campos.email;
+        }
+        else {
+
+            // Verificamos que no exista un usuario con ese correo electronico ya que 
+            // no se podría actualizar ya que choca con la validación de campo unico
+            // y con esto controlamos esa excepción
+            const existeEmail = await Usuario.findOne({ email: req.body.email });
+            if( existeEmail ){
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Ya existe un usuario registrado con ese email'
+                });
+            }
+
+        }
+        
+        delete campos.password;
+        delete campos.google;
+
+        // Por lo tanto enviamos el id a actualizar, el valor de los campos que estamos actualizando, e indicamos
+        // como un tercer parámetro indicando el new en true para que nos muestre la información por la cual se actualizao
+        // ya que si no se indica dicho parámetro muestra la anterior información que se tenía a pesar de que si se actualizo
+        // la información
+        const usuarioActualizado = await Usuario.findByIdAndUpdate( uid, campos, { new: true } );
+
+        res.json({
+            ok: true,
+            usuario: usuarioActualizado
+        })
+
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error Inesperado'
+        });
+    }
+
+}
+
 // Exportamos
 module.exports = {
     getUsuarios,
-    crearUsuario
+    crearUsuario,
+    actualizarUsuario
 }

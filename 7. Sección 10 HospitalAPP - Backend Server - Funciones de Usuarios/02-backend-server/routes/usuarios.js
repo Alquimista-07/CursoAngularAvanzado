@@ -9,7 +9,7 @@ const { check } = require('express-validator');
 // Importamos el middleware personalizado para validar campos
 const { validarCampos } = require('../middlewares/validar-campos');
 // Importamos controladores de usuarios
-const { getUsuarios, crearUsuario } = require('../controllers/usuarios');
+const { getUsuarios, crearUsuario, actualizarUsuario } = require('../controllers/usuarios');
 
 const router = Router();
 
@@ -35,6 +35,15 @@ router.post( '/',
         validarCampos
     ], 
     crearUsuario );
+
+// Actualizar el registro de un usuario
+router.put( '/:id', 
+[
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('email', 'El email es obligatorio').isEmail(),
+    check('role', 'El role es obligatorio').isEmpty()
+],
+actualizarUsuario );
 
 // Exortamos el router
 module.exports = router;

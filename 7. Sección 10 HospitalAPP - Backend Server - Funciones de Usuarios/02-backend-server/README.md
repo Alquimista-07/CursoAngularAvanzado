@@ -149,6 +149,12 @@ npm i express-validator
 npm i bcryptjs
 ```
 
+* A través del siguiente comando instalamos el "JWT" el cual es un paquete que nos va a permitir generar JSON Web Tokens para gestionar la sesión de nuestros usuarios de una manera pasiva.
+
+```
+npm i jsonwebtoken
+```
+
 ### NOTA:
 
 * Adicionalmente si necesitamos instalar una versión específica de un paquete lo podemos hacer indicando un @ seguido de la versión a instalar. Un ejemplo sería el siguiente:

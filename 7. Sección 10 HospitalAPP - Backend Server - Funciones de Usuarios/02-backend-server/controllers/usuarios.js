@@ -7,6 +7,7 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
+const { generarJWT } = require('../helpers/jwt');
 
 // NOTA: Basicamente dentro de este archivo tenemos funciones que vamos a exportar
 //       y que continen la logica que vamos a necesitar para gestionar los usuarios
@@ -54,13 +55,17 @@ const crearUsuario = async(req, res = response) => {
         //       de respuesta del servicio (en este caso crearUsuario) porque va a consumir más memoria a la hora de crear la contraseña. Adicionalmente podemos ver más información
         //       en la documentación de bcrypt sobre los métodos y funciones que tiene.
         usuario.password = bcrypt.hashSync( password, salt );
+
+        // Generarel token - JWT
+        const token = await generarJWT( usuario.id );
         
         // Guardar usuario
         await usuario.save();
     
         res.json({
             ok: true,
-            usuario
+            usuario,
+            token
         });
 
     }

@@ -10,13 +10,14 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 // Importamos controladores de usuarios
 const { getUsuarios, crearUsuario, actualizarUsuario, borrarUsuario } = require('../controllers/usuarios');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
 // Definimos las rutas pasando como segundo argumento el controlador
 
 // Obtener usuarios
-router.get( '/', getUsuarios );
+router.get( '/', [ validarJWT ], getUsuarios );
 
 // Crear usuario
 // Acá adentro definimos todos los middlewares que necesito que esta ruta pase, o evalue o ejecute antes
@@ -39,16 +40,17 @@ router.post( '/',
 // Actualizar el registro de un usuario
 router.put( '/:id', 
 [
+    validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('email', 'El email es obligatorio').isEmail(),
-    check('role', 'El role es obligatorio').isEmpty(),
+    check('role', 'El role es obligatorio').not().isEmpty(),
     // Agragamos el middleware personalizado para otimizar el código de errors que tenemos en los controladores
     validarCampos
 ],
 actualizarUsuario );
 
 // Borrar un usuario
-router.delete('/:id', borrarUsuario);
+router.delete('/:id', [ validarJWT ], borrarUsuario);
 
 // Exortamos el router
 module.exports = router;

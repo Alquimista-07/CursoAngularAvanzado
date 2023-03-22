@@ -18,6 +18,7 @@ const HospitalSchema = Schema({
     },
     // Referencia al usuario para saber siempre quién lo creó
     usuario: {
+        required: true,
         // Aca indicamos que el schema va a tener una realación con la referencia
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
@@ -34,4 +35,4 @@ HospitalSchema.method('toJSON', function() {
 });
 
 // Exportamos el modelo
-module.exports = model( 'Usuario', HospitalSchema );
+module.exports = model( 'Hospital', HospitalSchema );

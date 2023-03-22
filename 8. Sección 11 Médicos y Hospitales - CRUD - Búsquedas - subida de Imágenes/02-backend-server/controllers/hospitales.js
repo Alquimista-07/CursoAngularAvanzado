@@ -2,6 +2,9 @@
 
 const { response } = require('express');
 
+// Importamos el modelo
+const Hospital = require('../models/hospital');
+
 const getHospitales = (req, res = response) => {
 
     res.json({
@@ -11,12 +14,32 @@ const getHospitales = (req, res = response) => {
 
 }
 
-const crearHospital = (req, res = response) => {
+const crearHospital = async(req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: 'crearHospital'
-    })
+    // Extraemos el id del usuario que lo esta grabando
+    const uid = req.uid;
+
+    const hospital = new Hospital( {
+        usuario: uid,
+        ...req.body
+    } );
+
+    try {
+
+        const hospitalDB = await hospital.save();
+
+        res.json({
+            ok: true,
+            hospital: hospitalDB
+        })
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        })
+    }
 
 }
 

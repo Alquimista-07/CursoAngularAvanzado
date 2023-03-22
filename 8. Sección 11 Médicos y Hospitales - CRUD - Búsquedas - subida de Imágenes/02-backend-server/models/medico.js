@@ -1,13 +1,13 @@
 // Modelo de mongoose encargado del modelo de base de datos y agregar ciertas
-// restricciones para que cada registro de usuarios se vea de la forma que
+// restricciones para que cada registro de medicos se vea de la forma que
 // queremos
 
 const { Schema, model } = require('mongoose');
 
 // Creamos el schema que es la definición de cada uno de los registros que van a estar
-// dentro de una colección ("tabla usuarios" por así decirlo que del todo no es cierto ya que mongo es una
+// dentro de una colección ("tabla medicos" por así decirlo que del todo no es cierto ya que mongo es una
 // DB noSQL)
-const HospitalSchema = Schema({
+const MedicoSchema = Schema({
 
     nombre: {
         type: String,
@@ -21,17 +21,23 @@ const HospitalSchema = Schema({
         // Aca indicamos que el schema va a tener una realación con la referencia
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
+    },
+    // Creamos una referencia al hospital ya que los medicos van a estar asignados a un hospital
+    hospital: {
+        // Aca indicamos que el schema va a tener una realación con la referencia
+        type: Schema.Types.ObjectId,
+        ref: 'Hospital'
     }
 
-}, { collection: 'hospitales' }); // Cambiamos para que en la DB no aparezca hospitals sino como queremos que se muestre que sera hospitales
+});
 
 // NOTA: Cabe resaltar que esto que se hace afecta visualmente y no directamente en la base de datos, adicionalmente
 //       esto es de manera global, es decir en todo lado donde tengamos ese id va a aparecer como uid
-HospitalSchema.method('toJSON', function() {
+MedicoSchema.method('toJSON', function() {
     // Extraemos la versión, y el resto del objeto
     const { __v, ...object } = this.toObject();
     return object;
 });
 
 // Exportamos el modelo
-module.exports = model( 'Usuario', HospitalSchema );
+module.exports = model( 'Medico', MedicoSchema );

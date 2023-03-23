@@ -20,13 +20,15 @@ const MedicoSchema = Schema({
     usuario: {
         // Aca indicamos que el schema va a tener una realación con la referencia
         type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
+        required: true
     },
     // Creamos una referencia al hospital ya que los medicos van a estar asignados a un hospital
     hospital: {
         // Aca indicamos que el schema va a tener una realación con la referencia
         type: Schema.Types.ObjectId,
-        ref: 'Hospital'
+        ref: 'Hospital',
+        required: true
     }
 
 });

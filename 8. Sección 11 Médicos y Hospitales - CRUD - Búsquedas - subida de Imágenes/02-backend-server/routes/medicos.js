@@ -26,7 +26,11 @@ router.get( '/', [], getMedicos );
 // Por lo tanto el primer argumento es el nombre del campo que estoy esperando
 // y luego el mensaje de error. 
 router.post( '/', 
-    [], 
+    [
+        validarJWT,
+        check('nombre', 'EL nombre del medio es necesario').not().isEmpty(),
+        validarCampos
+    ], 
     crearMedico );
 
 // Actualizar el registro Medico

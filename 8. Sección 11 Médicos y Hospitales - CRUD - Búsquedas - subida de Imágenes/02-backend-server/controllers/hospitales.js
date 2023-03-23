@@ -5,11 +5,17 @@ const { response } = require('express');
 // Importamos el modelo
 const Hospital = require('../models/hospital');
 
-const getHospitales = (req, res = response) => {
+const getHospitales = async(req, res = response) => {
+
+    // Obtenemos los hospitales, adicionalmente también obtenemos el nombre no solo el id de
+    // quién lo creo usando el método populate indicando que vamos a llamar y como segundo
+    // parámetro indicamos los campos que necesitemos como por ejemplo el nombre, el email, etc
+    const hospitales = await Hospital.find()
+                                     .populate('usuario', 'nombre img');
 
     res.json({
         ok: true,
-        msg: 'getHospitales'
+        msg: hospitales
     })
 
 }

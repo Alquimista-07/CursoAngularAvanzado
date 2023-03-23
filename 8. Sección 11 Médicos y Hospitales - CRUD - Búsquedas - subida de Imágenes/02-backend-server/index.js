@@ -54,6 +54,9 @@ app.use( '/api/hospitales', require('./routes/hospitales') );
 // Creamos la ruta de medicos
 app.use( '/api/medicos', require('./routes/medicos') );
 
+// Creamos la ruta de busqueda
+app.use( '/api/todo', require('./routes/busquedas') );
+
 // Para levantar el servidor
 app.listen( process.env.PORT, () =>{
     console.log( 'Servidor corriendo en puerto ' + process.env.PORT );

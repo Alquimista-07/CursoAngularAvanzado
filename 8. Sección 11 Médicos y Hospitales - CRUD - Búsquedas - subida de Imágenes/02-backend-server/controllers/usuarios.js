@@ -15,13 +15,54 @@ const { generarJWT } = require('../helpers/jwt');
 // Obtener usuarios
 const getUsuarios = async(req, res) => {
 
+    //--------------------
+    // Paginación Forma 1
+    //--------------------
+    // Creamos la constante con al que vamos a obtener el parametro opcional que va a indicar desde
+    // donde voy a mostrar la paginación
+    const desde = Number(req.query.desde) || 0;
+
+    /*
     // Como parametro del find podemos mandar {} para especificar un filtro y solo mostrar lo que quiero
-    const usuarios = await Usuario.find({}, 'nombre email role google');
+    const usuarios = await Usuario.find({}, 'nombre email role google')
+                                  // Usamos el skip para que se salte todos los registros que están antes del desde
+                                  .skip( desde )
+                                  // Establecemos el limite que indica cuantos registros voy a mostrar por página
+                                  .limit( 5 );
+
+    // Como me gustaría no solo mostrar la cantidad de registros que se muestran sino que también
+    // quiero mostrar cuantos registros tengo en la base de datos, para ello hacemos lo siguiente:
+    const total = await Usuario.count();
+
+    */
+
+     //--------------------
+    // Paginación Forma 2
+    //--------------------
+    // NOTA: Ahora el anterior código funciona pero el inconveniente es que podemos relentizar el proceso
+    //       ya que son tareas asincronas que se están disparando una después de la otra la cual cuando se 
+    //       tengan bastantes registros pueden causar problemas, entonces para resolver el problema tenemos
+    //       una función propia que viene en Javascript desde el ES6.
+    //       Por lo tanto esto si se nos va a ejeceutar de manera simultanea dando mejor performance al proceso.
+    //       También adicionalmente prodemos desestructurar para indicar que lo que regrasa la primera promesa
+    //       son los usuarios y lo que devuelve la segunda promesa es el total de registros tal cual como teníamos
+    //       en el anterior código.
+    const [ usuarios, total ] = await Promise.all([
+        Usuario
+            .find({}, 'nombre email role google')
+            // Usamos el skip para que se salte todos los registros que están antes del desde
+            .skip( desde )
+            // Establecemos el limite que indica cuantos registros voy a mostrar por página
+            .limit( 5 ),
+
+        Usuario.count()
+    ]);
 
     res.json({
         ok: true,
         usuarios,
-        uid: req.uid
+        uid: req.uid,
+        total
     });
 
 }

@@ -2,6 +2,9 @@
 
 const { response } = require("express");
 
+// Importamos el uuid
+const { v4: uuidv4 } = require('uuid');
+
 const fileUpload = ( req, res = response ) => {
 
     const tipo = req.params.tipo;
@@ -28,10 +31,49 @@ const fileUpload = ( req, res = response ) => {
     }
 
     // Procesar la imágen...
+    // Primero extraemos el archivo
+    const file = req.files.imagen;
 
-    res.json({
-        ok: true,
-        msg: 'fileUploaded'
+    // Extraemos la extensión del archivo
+    const nombreCortado = file.name.split('.'); // por ejemplo imagen1.2.3.jpg
+    const extensionArchivo = nombreCortado[ nombreCortado.length - 1 ];
+
+    // Validar extensión
+    // Entonces en este caso como vamos a subir solo imagenes tenemos que dejar subir archivos validos
+    // ya que en este codigo nos permite subir cualquier tipo de archivo
+    const extensionesValidas = [ 'png', 'jpg', 'jpeg', 'gif' ];
+    if( !extensionesValidas.includes( extensionArchivo ) ){
+        return res.status(400).json({
+            ok: false,
+            msg: 'Este tipo de archivo no es permitido'
+        });
+    }
+
+    // Generamos el nombre del archivo
+    // Para ello vamos a usar un id unico para asignar como nombre de la imágen,
+    // entonces para esto vamos a usar la librería uuid, y la cual la instalamos
+    // usando el comando npm install uuid
+    const nombreArchivo = `${ uuidv4() }.${ extensionArchivo }`;
+
+    // Creamos el Path donde se guarda la imágen
+    const path = `./uploads/${ tipo }/${ nombreArchivo }`;
+
+    // Movemos el archivo al path
+    // Use the mv() method to place the file somehere on your server
+    file.mv( path, function(err) {
+        if (err){
+            console.log(err);
+            return res.status(500).json({
+                ok: false,
+                msg: 'Error al mover la imágen'
+            });
+        } 
+        
+        res.json({
+            ok: true,
+            msg: 'Archivo subido',
+            nombreArchivo
+        });
     });
 
 }

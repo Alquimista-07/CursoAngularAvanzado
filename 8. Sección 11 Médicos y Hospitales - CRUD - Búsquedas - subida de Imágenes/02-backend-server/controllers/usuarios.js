@@ -49,13 +49,13 @@ const getUsuarios = async(req, res) => {
     //       en el anterior código.
     const [ usuarios, total ] = await Promise.all([
         Usuario
-            .find({}, 'nombre email role google')
+            .find({}, 'nombre email role google img')
             // Usamos el skip para que se salte todos los registros que están antes del desde
             .skip( desde )
             // Establecemos el limite que indica cuantos registros voy a mostrar por página
             .limit( 5 ),
 
-        Usuario.count()
+        Usuario.countDocuments()
     ]);
 
     res.json({

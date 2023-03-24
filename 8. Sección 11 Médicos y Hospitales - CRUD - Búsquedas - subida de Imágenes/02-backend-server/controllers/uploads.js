@@ -5,6 +5,8 @@ const { response } = require("express");
 // Importamos el uuid
 const { v4: uuidv4 } = require('uuid');
 
+const { actualizarImagen } = require("../helpers/actualizar-imagen");
+
 const fileUpload = ( req, res = response ) => {
 
     const tipo = req.params.tipo;
@@ -68,6 +70,9 @@ const fileUpload = ( req, res = response ) => {
                 msg: 'Error al mover la imágen'
             });
         } 
+
+        // Actualizar base de datos
+        actualizarImagen( tipo, id, nombreArchivo );
         
         res.json({
             ok: true,

@@ -13,7 +13,7 @@ const expressFileUpload = require('express-fileupload');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Importamos el controlador de carga de archivos
-const { fileUpload } = require('../controllers/uploads');
+const { fileUpload, retornaImagen } = require('../controllers/uploads');
 
 // Usamos el middleware
 router.use( expressFileUpload() );
@@ -23,6 +23,9 @@ router.put( '/:tipo/:id', [
     validarJWT
 ], 
 fileUpload );
+
+// Obtener archivo
+router.get( '/:tipo/:foto', [], retornaImagen );
 
 
 // Exportamos el router

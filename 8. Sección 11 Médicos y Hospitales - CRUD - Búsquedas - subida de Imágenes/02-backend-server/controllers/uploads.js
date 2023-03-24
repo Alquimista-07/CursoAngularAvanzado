@@ -1,5 +1,9 @@
 // Controlador uploads
 
+const path = require('path');
+
+const fs = require('fs');
+
 const { response } = require("express");
 
 // Importamos el uuid
@@ -83,6 +87,27 @@ const fileUpload = ( req, res = response ) => {
 
 }
 
+// Creamos el controlador para obtener la imágen
+const retornaImagen = ( req, res = response ) => {
+
+    const tipo = req.params.tipo;
+    const foto = req.params.foto;
+
+    // Apuntamos al path completo para ello lo construimos
+    const pathImg = path.join( __dirname, `../uploads/${ tipo }/${ foto }` );
+
+    // Imagen por defecto para manejar la excepción en caso de que no exista
+    if( fs.existsSync( pathImg ) ){
+        res.sendFile( pathImg );
+    } else {
+        const pathImg = path.join( __dirname, `../uploads/no-imagen.jpg` );
+        res.sendFile( pathImg );
+    }
+
+
+}
+
 module.exports = {
-    fileUpload
+    fileUpload,
+    retornaImagen
 }

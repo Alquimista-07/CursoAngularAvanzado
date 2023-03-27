@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { generarJWT } = require("../helpers/jwt");
 
+const { googleVerify } = require("../helpers/google-verify");
+
 const login = async (req, res = response) => {
 
     const { email, password } = req.body;
@@ -53,10 +55,26 @@ const login = async (req, res = response) => {
 // Controlador login con Google Sign-in
 const googleSignIn = async (req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: req.body.token
-    });
+    // Para hacer la validación requermimso de un paquete de node que se instala usando
+    // el comando: npm install google-auth-library --save
+    try {
+        const { email, name, picture } = await googleVerify( req.body.token );
+        res.json({
+            ok: true,
+            email,
+            name,
+            picture
+        });
+    }
+    catch (err) {
+
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Token de Google no es correcto'
+        });
+
+    }
 
 }
 

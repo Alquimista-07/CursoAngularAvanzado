@@ -61,11 +61,44 @@ const googleSignIn = async (req, res = response) => {
     // el comando: npm install google-auth-library --save
     try {
         const { email, name, picture } = await googleVerify( req.body.token );
+
+        // Verificamos si el email ya existe
+        const usuarioDB = await Usuario.findOne({ email });
+        let usuario;
+
+        if ( !usuarioDB ){
+            usuario = new Usuario({
+                nombre: name,
+                email,
+                // Este password solo lo colocamos para que no choque con la validación de requerido 
+                // pero como sabemos esto se hace es con un hash y por lo tanto esto no es usado y no sirve para iniciar sesión
+                password: '***', 
+                img: picture,
+                google: true
+            })
+        } else {
+            usuario = usuarioDB;
+            /*
+            // Si quisieramos sobreescribir el password y hacer que siempre se loguee con google podríamos hacer
+            // lo siguiente:
+            usuario.password = '**'
+            */
+           // Ahora como no es el caso y queremos permitir que se loguee con el password normalmente hacemos lo siguiente
+           usuario.google = true;
+        }
+
+        // Grabamos el usuario
+        await usuario.save();
+
+        // Generamos el TOKEN - JWT
+        const token = await generarJWT( usuario.id );
+
         res.json({
             ok: true,
             email,
             name,
-            picture
+            picture,
+            token
         });
     }
     catch (err) {

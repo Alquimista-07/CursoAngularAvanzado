@@ -53,6 +53,8 @@ const login = async (req, res = response) => {
 }
 
 // Controlador login con Google Sign-in
+// Documentación oficial Google Identity
+// URL: https://developers.google.com/identity/gsi/web/guides/overview?hl=es-419
 const googleSignIn = async (req, res = response) => {
 
     // Para hacer la validación requermimso de un paquete de node que se instala usando

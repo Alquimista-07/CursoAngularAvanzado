@@ -1,3 +1,6 @@
+// Documentación oficial Google Identity
+// URL: https://developers.google.com/identity/gsi/web/guides/overview?hl=es-419
+
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_SECRET);
 

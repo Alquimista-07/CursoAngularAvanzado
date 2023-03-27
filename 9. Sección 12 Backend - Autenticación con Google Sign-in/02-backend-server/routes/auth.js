@@ -18,6 +18,8 @@ router.post('/',
 ],
 login );
 
+// Documentación oficial Google Identity
+// URL: https://developers.google.com/identity/gsi/web/guides/overview?hl=es-419
 router.post('/google', 
 [
     check('token', 'El token de Google es obligatoria').not().isEmpty(),

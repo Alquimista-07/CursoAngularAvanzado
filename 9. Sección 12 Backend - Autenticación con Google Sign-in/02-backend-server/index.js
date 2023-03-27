@@ -37,6 +37,8 @@ const app = express();
 app.use( cors() );
 
 // Carpeta publica
+// Documentación oficial Google Identity
+// URL: https://developers.google.com/identity/gsi/web/guides/overview?hl=es-419
 app.use( express.static('public') );
 
 // Lectura y parseo del body

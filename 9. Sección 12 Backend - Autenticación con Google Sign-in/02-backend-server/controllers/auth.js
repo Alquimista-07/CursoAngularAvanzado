@@ -50,7 +50,18 @@ const login = async (req, res = response) => {
 
 }
 
+// Controlador login con Google Sign-in
+const googleSignIn = async (req, res = response) => {
+
+    res.json({
+        ok: true,
+        msg: req.body.token
+    });
+
+}
+
 // Exportamos
 module.exports = {
-    login
+    login,
+    googleSignIn
 }

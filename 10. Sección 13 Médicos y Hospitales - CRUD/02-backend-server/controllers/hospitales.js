@@ -79,7 +79,6 @@ const actualizarHospital = async (req, res = response) => {
 
         res.json({
             ok: true,
-            msg: 'actualizarHospital',
             hospital: hospitalActualizado
         });
         
@@ -93,12 +92,38 @@ const actualizarHospital = async (req, res = response) => {
 
 }
 
-const borrarHospital = (req, res = response) => {
+const borrarHospital = async (req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: 'borrarHospital'
-    })
+    const hospitalId = req.params.id;
+
+    try {
+
+        // Obtenemos la referencia para ver si existe un hospital con ese id
+        const hospitalDB = await Hospital.findById( hospitalId );
+
+        // Si no existe mandamos un error
+        if ( !hospitalDB ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Hospital no encontrado por id'
+            });
+        }
+
+        // Borramos el hospital
+        await Hospital.findByIdAndDelete( hospitalId )
+
+        res.json({
+            ok: true,
+            msg: 'Hospital Eliminado Correctamente'
+        });
+        
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 
 }
 

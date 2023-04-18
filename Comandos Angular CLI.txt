@@ -137,3 +137,13 @@ NOTA: El siguiente enlace nos dirige a la documentación oficial de Angular CLI:
 
 	ng generate directive directorio/nombreDirectiva --skipTests        -> Este es el comando completo
 	ng g d directorio/nombreDirectiva --skipTests                       -> Esta es la forma corta
+
+----------------------------------------------------------------------------------------------------------------
+* El siguiente comando nos permite subir y clonar repositorios cuando nos da error porque el nombre del archivo
+  es muy largo. Para usar el comando debemos ejecutarlo en una terminal en modo administrador en la ruta donde
+  se encuentra el repositorio.
+----------------------------------------------------------------------------------------------------------------
+    
+	git config --system core.longpaths true
+	
+----------------------------------------------------------------------------------------------------------------

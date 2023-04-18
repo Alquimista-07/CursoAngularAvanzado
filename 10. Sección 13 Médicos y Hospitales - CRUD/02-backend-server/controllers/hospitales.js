@@ -49,12 +49,47 @@ const crearHospital = async(req, res = response) => {
 
 }
 
-const actualizarHospital = (req, res = response) => {
+// Controlador para actualizar el hospital
+const actualizarHospital = async (req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: 'actualizarHospital'
-    })
+    const hospitalId = req.params.id;
+    const uid        = req.uid;
+
+    try {
+
+        // Obtenemos la referencia para ver si existe un hospital con ese id
+        const hospitalDB = await Hospital.findById( hospitalId );
+
+        // Si no existe mandamos un error
+        if ( !hospitalDB ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Hospital no encontrado por id'
+            });
+        }
+
+        // Si existe actualizamos el nombre que es el unico campo que vamos a actualizar, pero pues este metodo nos sirve para n campos.
+        // Establecemos el nombre
+        const cambiosHospital = {
+            ...req.body,
+            usuario: uid // Obtenemos el id de la ultima persona que realizo la modificación
+        }
+        // Ya esta establecido entonces lo actualizamos
+        const hospitalActualizado = await Hospital.findByIdAndUpdate( hospitalId, cambiosHospital, { new: true } ) // La instrucción  new: true devuelve el ultimo documento actualizado
+
+        res.json({
+            ok: true,
+            msg: 'actualizarHospital',
+            hospital: hospitalActualizado
+        });
+        
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 
 }
 

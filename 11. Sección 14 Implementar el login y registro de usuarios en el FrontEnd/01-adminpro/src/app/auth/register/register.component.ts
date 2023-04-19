@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { UsuarioService } from 'src/app/services/usuario.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -27,7 +29,7 @@ export class RegisterComponent {
     validators: this.passwordsIguales( 'password', 'password2' )
   });
 
-  constructor( private fb: FormBuilder ) { }
+  constructor( private fb: FormBuilder, private usuarioService: UsuarioService ) { }
 
   // Definimos el método para capturar la información
   crearUsuario() {
@@ -35,12 +37,16 @@ export class RegisterComponent {
     console.log(this.registerForm.value);
     console.log(this.registerForm);
 
-    if( this.registerForm.valid ){
-      console.log('Posteando formulario');
-    } else {
-      console.log('Formulario no es correcto!!!...');
+    if( this.registerForm.invalid ){
+      return;
     }
 
+    // Realizar el posteo con la creación del usuario
+    this.usuarioService.crearUsuario( this.registerForm.value )
+        .subscribe( resp => {
+          console.log('Usuario Creado');
+          console.log(resp);
+        }, (err) => console.warn( err.error.msg ));
   }
 
   // Método para validar campos

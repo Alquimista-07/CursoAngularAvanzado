@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
+
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -46,7 +49,10 @@ export class RegisterComponent {
         .subscribe( resp => {
           console.log('Usuario Creado');
           console.log(resp);
-        }, (err) => console.warn( err.error.msg ));
+        }, (err) => {
+          // Si sucede un error
+          Swal.fire('Error', err.error.msg, 'error');
+        });
   }
 
   // Método para validar campos

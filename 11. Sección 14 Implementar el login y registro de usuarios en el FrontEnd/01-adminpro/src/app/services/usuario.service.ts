@@ -53,4 +53,17 @@ export class UsuarioService {
                );
   }
 
+  // Creamos un método que me va a permitir realizar el posteo del token
+  loginGoogle( token: string ) {
+    // Colocamos la url y mandamos el token como payload
+    return this.http.post( `${ base_url }/login/google`, { token } )
+               .pipe(
+                tap( (resp: any) =>{
+                  // console.log(resp);
+                  localStorage.setItem( 'token', resp.token );
+                })
+               );
+
+  }
+
 }

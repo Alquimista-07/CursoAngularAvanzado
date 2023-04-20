@@ -42,9 +42,12 @@ export class LoginComponent implements AfterViewInit {
   }
 
   googleInit() {
+    // console.log({esto: this})
     google.accounts.id.initialize({
       client_id: "125658081262-m7mel7rp3gncike2303g7kdu0aa8his7.apps.googleusercontent.com",
-      callback: this.handleCredentialResponse,
+      // callback: this.handleCredentialResponse,
+      // NOTA: Acá al colocar la response lo que estamos haciendo es que la referencia al this no cambie y se mangenta en el LoginComponent y no haga referencia al Io
+      callback: (response: any) => this.handleCredentialResponse(response),
     });
 
     google.accounts.id.renderButton(
@@ -58,7 +61,13 @@ export class LoginComponent implements AfterViewInit {
   }
 
   handleCredentialResponse( response: any ) {
-    console.log("Encoded JWT ID token: " + response.credential);
+    // console.log({esto: this})
+    // console.log("Encoded JWT ID token: " + response.credential);
+    this.usuarioService.loginGoogle( response.credential )
+        .subscribe( resp => {
+          // console.log({ login: resp });
+          this.router.navigateByUrl('/');
+        })
   }
 
   login() {

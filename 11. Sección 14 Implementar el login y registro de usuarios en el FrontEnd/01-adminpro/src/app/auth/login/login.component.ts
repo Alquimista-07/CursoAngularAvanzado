@@ -85,6 +85,9 @@ export class LoginComponent implements AfterViewInit {
           localStorage.removeItem('remember');
         }
 
+        // Navegar al dashboard
+        this.router.navigateByUrl('/');
+
       }, (err) => {
         Swal.fire('Error', err.error.msg, 'error');
       });

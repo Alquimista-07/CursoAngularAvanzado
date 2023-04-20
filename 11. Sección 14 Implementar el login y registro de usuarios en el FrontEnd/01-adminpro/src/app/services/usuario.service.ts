@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 
-import { tap } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -18,6 +18,25 @@ const base_url = environment.base_url;
 export class UsuarioService {
 
   constructor( private http: HttpClient ) { }
+
+  // Metodo para validar el token almacenado
+  validarToken(): Observable<boolean> {
+    
+    const token = localStorage.getItem('token') || '';
+
+    return this.http.get(`${base_url}/login/renew`, {
+      headers: {
+        'x-token': token
+      }
+    }).pipe(
+      tap( (resp: any) =>{
+        localStorage.setItem('token', resp.token)
+      }),
+      map( resp => true),
+      catchError( error => of( false ) )
+    );
+
+  }
 
   crearUsuario( formData: RegisterForm ){
     // Hay que recordar que como el httpClient de Angular trabaja con Observables debemos subscribirnos con el .subscribe()

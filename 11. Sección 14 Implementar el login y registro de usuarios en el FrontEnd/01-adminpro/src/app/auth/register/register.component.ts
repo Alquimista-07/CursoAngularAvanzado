@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // ES6 Modules or TypeScript
@@ -32,7 +33,7 @@ export class RegisterComponent {
     validators: this.passwordsIguales( 'password', 'password2' )
   });
 
-  constructor( private fb: FormBuilder, private usuarioService: UsuarioService ) { }
+  constructor( private fb: FormBuilder, private usuarioService: UsuarioService, private router: Router ) { }
 
   // Definimos el método para capturar la información
   crearUsuario() {
@@ -47,8 +48,8 @@ export class RegisterComponent {
     // Realizar el posteo con la creación del usuario
     this.usuarioService.crearUsuario( this.registerForm.value )
         .subscribe( resp => {
-          console.log('Usuario Creado');
-          console.log(resp);
+          // Navegar al dashboard
+          this.router.navigateByUrl('/');
         }, (err) => {
           // Si sucede un error
           Swal.fire('Error', err.error.msg, 'error');

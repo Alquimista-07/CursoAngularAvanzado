@@ -20,9 +20,11 @@ export class LoginComponent {
   public loginForm = this.fb.group({
     // Definimos como quiero que luzca el formulario
     // El primer parametro es un valor por defecto, el segundo parametro son validaciones
-    email: ['test100@test.com', [ Validators.required, Validators.email ] ],
-    password: ['123456', Validators.required ],
-    remember: [ false ]
+    // NOTA: Ajustamos el email para que lo lea del localStorage y cuando no exista nada allí le coloque un string vacío.
+    //       Y también ajustamos para que guarde en el localStorage el estado del check del remember
+    email: [ localStorage.getItem('email') || '' , [ Validators.required, Validators.email ] ],
+    password: ['', Validators.required ],
+    remember: [ localStorage.getItem('remember') || false ]
 
   });
 
@@ -33,7 +35,16 @@ export class LoginComponent {
     console.log( this.loginForm.value );
     this.usuarioService.loginUsuario( this.loginForm.value )
         .subscribe( resp => {
-          console.log(resp);
+          
+          // Si esta checkeado grabanos el email en el localStorage para recordarlo
+          if ( this.loginForm.get('remember')?.value ) {
+            localStorage.setItem('email', this.loginForm.get('email')!.value);
+            localStorage.setItem('remember', 'true');
+          } else{
+            localStorage.removeItem('email');
+            localStorage.removeItem('remember');
+          }
+
         }, (err) => {
           Swal.fire('Error', err.error.msg, 'error');
         });

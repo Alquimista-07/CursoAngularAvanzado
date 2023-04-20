@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Observable, catchError, map, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 
-import { Observable, catchError, map, of, tap } from 'rxjs';
-
-import { environment } from 'src/environments/environment';
+// Saber cual es el usuario conectado es importante para el google identity
+// ya que este es el que usamos para quitar el acceso con google y que desaparezca del botón de inicio con google
+// entonces hacemos lo siguiente:
+declare const google: any;
 
 // Servicio para crear usuarios
 
@@ -17,7 +21,20 @@ const base_url = environment.base_url;
 })
 export class UsuarioService {
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) { }
+
+  // Método para cerrar sesión
+  logout() {
+    localStorage.removeItem('token');
+    
+    // Quitamos el usuario de google y navegamos
+    google.accounts.id.revoke('google@gmail.com', () =>{
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      })
+    });
+
+  }
 
   // Metodo para validar el token almacenado
   validarToken(): Observable<boolean> {

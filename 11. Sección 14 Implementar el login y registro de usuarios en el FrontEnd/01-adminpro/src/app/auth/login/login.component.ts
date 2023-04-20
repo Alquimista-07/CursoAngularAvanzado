@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -33,7 +33,7 @@ export class LoginComponent implements AfterViewInit {
 
   });
 
-  constructor(private router: Router, private fb: FormBuilder, private usuarioService: UsuarioService) { }
+  constructor(private router: Router, private fb: FormBuilder, private usuarioService: UsuarioService, private ngZone: NgZone) { }
 
   ngAfterViewInit(): void {
 
@@ -66,8 +66,10 @@ export class LoginComponent implements AfterViewInit {
     this.usuarioService.loginGoogle( response.credential )
         .subscribe( resp => {
           // console.log({ login: resp });
-          this.router.navigateByUrl('/');
-        })
+          this.ngZone.run(() => {
+            this.router.navigateByUrl('/');
+          })
+        });
   }
 
   login() {

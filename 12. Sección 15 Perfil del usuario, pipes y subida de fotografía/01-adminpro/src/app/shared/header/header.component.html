@@ -164,7 +164,12 @@
                                     <div class="u-img"><img [src]="usuario.imagenUrl" alt="user"></div>
                                     <div class="u-text">
                                         <h4>{{ usuario.nombre }}</h4>
-                                        <p class="text-muted">{{ usuario.email }}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <p class="text-muted">
+                                            <!--Acá usando el pipe slice lo que estoy haciendo es cortar desde la posicion 0 hacia adelante 20 caracteres para que cuando el email sea muy largo visualmente se corte y no afecte el estilo css de la página web-->
+                                            <!--Ahora también para que se vea más bonito usamos un operador ternario para que cuando la longitud supere los 20 caracteres coloque unos puntos suspensivos-->
+                                            {{ usuario.email | slice: 0:22 }}{{ (usuario.email.length > 22)? '...' : '' }}
+                                        </p>
+                                        <a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>

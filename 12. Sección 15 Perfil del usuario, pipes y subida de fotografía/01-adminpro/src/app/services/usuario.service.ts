@@ -52,9 +52,9 @@ export class UsuarioService {
         'x-token': token
       }
     }).pipe(
-      tap( (resp: any) =>{
+      map( (resp: any) =>{
         
-        const { email, google, nombre, role, img, uid } = resp.usuario;
+        const { email, google, nombre, role, img = '', uid } = resp.usuario;
         
         // Asignamos un objeto al usuario, por lo tanto este objeto no puede usar métodos definidos en el modelo usuario
         // ya que nos daría error y se iríra por el catch. 
@@ -65,7 +65,9 @@ export class UsuarioService {
         //
         this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
 
-        localStorage.setItem('token', resp.token)
+        localStorage.setItem('token', resp.token);
+
+        return true;
       }),
       map( resp => true),
       catchError( error => of( false ) )

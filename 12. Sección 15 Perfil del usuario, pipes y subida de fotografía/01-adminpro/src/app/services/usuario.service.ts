@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
+import { Usuario } from '../models/usuario.model';
 
 // Saber cual es el usuario conectado es importante para el google identity
 // ya que este es el que usamos para quitar el acceso con google y que desaparezca del botón de inicio con google
@@ -20,6 +21,9 @@ const base_url = environment.base_url;
   providedIn: 'root'
 })
 export class UsuarioService {
+
+  // Creamos una propiedad en la clase que es de tipo Usuario
+  private usuario!: Usuario;
 
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) { }
 
@@ -49,6 +53,19 @@ export class UsuarioService {
       }
     }).pipe(
       tap( (resp: any) =>{
+        
+        const { email, google, nombre, role, img, uid } = resp.usuario;
+        
+        // Asignamos un objeto al usuario, por lo tanto este objeto no puede usar métodos definidos en el modelo usuario
+        // ya que nos daría error y se iríra por el catch. 
+        // Por lo tanto si queremos usar los métodos que tengamos en el modelo deberíamos crearnos una instancia, como se muestra en
+        // el siguiente ejemplo:
+        //
+        // this.usuario = new Usuario('juan', 'prueba@prueba.com');
+        //
+        this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
+        this.usuario.imprimirUsuario();
+
         localStorage.setItem('token', resp.token)
       }),
       map( resp => true),

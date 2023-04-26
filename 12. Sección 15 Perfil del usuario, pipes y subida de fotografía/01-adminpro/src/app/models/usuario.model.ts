@@ -12,4 +12,8 @@ export class Usuario {
         public role?: string, 
         public uid?: string) {}
 
+    imprimirUsuario() {
+        console.log( this.nombre );
+    }
+
 }

@@ -23,7 +23,7 @@ const base_url = environment.base_url;
 export class UsuarioService {
 
   // Creamos una propiedad en la clase que es de tipo Usuario
-  private usuario!: Usuario;
+  public usuario!: Usuario;
 
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) { }
 
@@ -64,7 +64,6 @@ export class UsuarioService {
         // this.usuario = new Usuario('juan', 'prueba@prueba.com');
         //
         this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
-        this.usuario.imprimirUsuario();
 
         localStorage.setItem('token', resp.token)
       }),

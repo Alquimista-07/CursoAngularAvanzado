@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -45,6 +46,10 @@ export class PerfilComponent implements OnInit {
           const { nombre, email } = this.perfilForm.value;
           this.usuario.nombre = nombre;
           this.usuario.email = email;
+
+          Swal.fire('Guardado', 'Cambios efectuados correctamente', 'success');
+        }, (err) => {
+          Swal.fire('Error', err.error.msg, 'error')
         });
   }
 
@@ -72,7 +77,7 @@ export class PerfilComponent implements OnInit {
     // Procedimiento cuando se carga
     reader.onloadend = () => {
       this.imgTemp = reader.result;
-      console.log( reader.result );
+      // console.log( reader.result );
     }
 
     return;
@@ -81,7 +86,14 @@ export class PerfilComponent implements OnInit {
 
   subirImagen() {
     this.fileUploadService.actualizarFoto( this.imagenSubir, 'usuarios', this.usuario.uid! )
-    .then( img => this.usuario.img = img );
+    .then( img => {
+      this.usuario.img = img;
+      if ( img != null ){
+        Swal.fire('Guardado', 'Imagen de usuario actualizada', 'success');
+      } else{
+        Swal.fire('Error', 'No se pudo subir la imágen', 'error');
+      }
+    });
   }
 
 }

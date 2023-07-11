@@ -20,6 +20,9 @@ export class PerfilComponent implements OnInit {
   // Creamos una nueva propidad que va a servir para subir la imágen
   public imagenSubir!: File;
 
+  // Creamos otra propiedad para la previsualización de la imágen que ya sabemos que es un string en base 64 temporal
+  public imgTemp: any = '';
+
   constructor( private fb: FormBuilder, private usuariService: UsuarioService,
     private fileUploadService: FileUploadService ) { 
     this.usuario = usuariService.usuario;
@@ -48,11 +51,37 @@ export class PerfilComponent implements OnInit {
   cambiarImagen( file: File ){
     // console.log(file);
     this.imagenSubir = file;
+
+    // NOTA: Ahora lo que vamos a hacer es recuperar la imágen que seleccionamos para mistrarla en la caja de imágen
+    //       Para tener algo así como una previsualización de la misma. Para ello hacemos lo siguiente
+    
+    // Si no existe el archivo no continue y no hace nada
+    if( !file ){
+      return this.imgTemp = null;
+    }
+
+    // Si existe continua acá
+    // Para esto vamos a creamos un string en base 64 que va a permitir mostrar la imágen, usando
+    // un método propio de JavaScript que es el FileReader
+    // OJO: Esto no lo deberíamos hacer para grabar en una base de datos ya que es un string muy grande
+    //      pero para una previsualización no hay problema ya que no sirve para hacer lo que queremos hacer
+    const reader = new FileReader();
+
+    reader.readAsDataURL( file );
+
+    // Procedimiento cuando se carga
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+      console.log( reader.result );
+    }
+
+    return;
+
   }
 
   subirImagen() {
     this.fileUploadService.actualizarFoto( this.imagenSubir, 'usuarios', this.usuario.uid! )
-    .then( img => console.log( img ) );
+    .then( img => this.usuario.img = img );
   }
 
 }

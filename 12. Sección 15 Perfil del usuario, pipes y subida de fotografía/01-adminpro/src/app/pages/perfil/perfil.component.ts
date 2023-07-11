@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -11,23 +12,29 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class PerfilComponent implements OnInit {
 
   public perfilForm!: FormGroup;
+  public usuario: Usuario;
 
-  constructor( private fb: FormBuilder, private usuariService: UsuarioService ) { }
+  constructor( private fb: FormBuilder, private usuariService: UsuarioService ) { 
+    this.usuario = usuariService.usuario;
+  }
 
   ngOnInit(): void {
 
     this.perfilForm = this.fb.group({
-      nombre: [ 'Juan Carlos', Validators.required ],
-      email: [ 'juan@gmail.com', [ Validators.required, Validators.email ] ]
+      nombre: [ this.usuario.nombre, Validators.required ],
+      email: [ this.usuario.email, [ Validators.required, Validators.email ] ]
     });
 
   }
 
   actualizarPerfil() {
-    console.log( this.perfilForm.value );
+    // console.log( this.perfilForm.value );
     this.usuariService.actualizarPerfil( this.perfilForm.value )
-        .subscribe( resp => {
-          console.log(resp);
+        .subscribe( () => {
+          // console.log(resp);
+          const { nombre, email } = this.perfilForm.value;
+          this.usuario.nombre = nombre;
+          this.usuario.email = email;
         });
   }
 

@@ -161,7 +161,15 @@ const actualizarUsuario = async( req, res = response ) => {
 
         }
         
-        campos.email = email;
+        // Colocamos una condición ya que tiene que funcionar solo si no es un usuario registrado a través de google
+        if ( !usuarioDB.google ){
+            campos.email = email;
+        } else if ( usuarioDB.email !== email ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuarios de google no pueden cambiar su correo'
+            })
+        }
 
         //----------------------------------------------------------------------------------------------------
         // NOTA: Esto se comento pero es una forma de borrar campos ya que se reemplazo por la desestructuración

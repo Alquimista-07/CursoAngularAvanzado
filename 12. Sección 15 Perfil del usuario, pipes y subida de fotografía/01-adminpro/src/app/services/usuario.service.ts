@@ -44,7 +44,7 @@ export class UsuarioService {
     // Quitamos el usuario de google y navegamos
     // NOTA: Acá se revoca es el correo en google identity, de momento esta un correo estático pero luego se va a ajustar
     //       para que use el correo que está autenticado.
-    google.accounts.id.revoke('google@gmail.com', () =>{
+    google.accounts.id.revoke( this.usuario.email , () =>{
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
       })

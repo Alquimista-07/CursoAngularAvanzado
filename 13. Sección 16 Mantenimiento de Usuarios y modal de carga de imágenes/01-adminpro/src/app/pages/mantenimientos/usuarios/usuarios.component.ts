@@ -15,6 +15,9 @@ export class UsuariosComponent implements OnInit {
   // Propiedad para tener la referencia a la página actual
   public desde: number = 0;
 
+  // Propiedad para manera el loading
+  public cargando: boolean = true;
+
   constructor( private usuarioService: UsuarioService ) { }
 
   ngOnInit(): void {
@@ -26,10 +29,13 @@ export class UsuariosComponent implements OnInit {
   // Método para cargar usuarios
   cargarUsuarios() {
 
+    this.cargando = true;
+
     this.usuarioService.cargarUsuarios( this.desde )
         .subscribe( ({ total, usuarios }) => {
           this.totalUsuarios = total;
           this.usuarios = usuarios;
+          this.cargando = false;
         });
 
   }

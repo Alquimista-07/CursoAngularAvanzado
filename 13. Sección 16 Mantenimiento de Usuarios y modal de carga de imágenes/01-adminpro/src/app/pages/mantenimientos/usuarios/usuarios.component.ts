@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
+import { BusquedasService } from 'src/app/services/busquedas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class UsuariosComponent implements OnInit {
   // Propiedad para manera el loading
   public cargando: boolean = true;
 
-  constructor( private usuarioService: UsuarioService ) { }
+  constructor( private usuarioService: UsuarioService, private busquedaService: BusquedasService ) { }
 
   ngOnInit(): void {
 
@@ -54,6 +55,18 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.cargarUsuarios();
+
+  }
+
+  // Método para buscar usuarios o médicos u hospitales
+  buscar ( termino: string ){
+    
+    this.busquedaService.bucar( 'usuarios', termino )
+        .subscribe( resultados => {
+
+          this.usuarios = resultados;
+          
+        });
 
   }
 

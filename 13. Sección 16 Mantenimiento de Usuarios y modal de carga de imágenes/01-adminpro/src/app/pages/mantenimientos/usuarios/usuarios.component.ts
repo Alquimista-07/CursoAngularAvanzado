@@ -15,6 +15,8 @@ export class UsuariosComponent implements OnInit {
   public usuarios: Usuario[] = [];
   // Propiedad para tener la referencia a la página actual
   public desde: number = 0;
+  // Propiedad para almacenar los usuarios actuales
+  public usuariosTemp: Usuario[] = [];
 
   // Propiedad para manera el loading
   public cargando: boolean = true;
@@ -36,6 +38,7 @@ export class UsuariosComponent implements OnInit {
         .subscribe( ({ total, usuarios }) => {
           this.totalUsuarios = total;
           this.usuarios = usuarios;
+          this.usuariosTemp = usuarios;
           this.cargando = false;
         });
 
@@ -61,13 +64,18 @@ export class UsuariosComponent implements OnInit {
   // Método para buscar usuarios o médicos u hospitales
   buscar ( termino: string ){
     
+    if( termino.length === 0){
+      return this.usuarios = this.usuariosTemp;
+    }
+
     this.busquedaService.bucar( 'usuarios', termino )
         .subscribe( resultados => {
 
           this.usuarios = resultados;
           
         });
-
+        
+    return;
   }
 
 }

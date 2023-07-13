@@ -177,4 +177,13 @@ export class UsuarioService {
 
   }
 
+  // Método para eliminar usuarios
+  eliminarUsuario( usuario: Usuario ) {
+    
+    // http://localhost:3000/api/usuarios/62ee6886882095fe38c11950
+    const url = `${base_url}/usuarios/${ usuario.uid }`;
+    return this.http.delete( url, this.headers );
+
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { BusquedasService } from 'src/app/services/busquedas.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
@@ -74,8 +75,33 @@ export class UsuariosComponent implements OnInit {
           this.usuarios = resultados;
           
         });
-        
+
     return;
+  }
+
+  // Método para eliminar usuarios
+  eliminarUsuario( usuario: Usuario ) {
+    
+    Swal.fire({
+      title: '¿Borrar usuario?',
+      text: `Esta a punto de borrar a ${ usuario.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrarlo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.eliminarUsuario( usuario )
+            .subscribe( resp => {
+              Swal.fire(
+                'Eliminado!',
+                `El usuario ${ usuario.nombre } ha sido eliminado.`,
+                'success'
+                )
+              this.cargarUsuarios();
+            });
+      }
+    })
+
   }
 
 }

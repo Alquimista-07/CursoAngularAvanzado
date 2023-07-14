@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+
 @Component({
   selector: 'app-modal-imagen',
   templateUrl: './modal-imagen.component.html',
@@ -8,16 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalImagenComponent implements OnInit {
 
-  // Propiedada para mostrar u ocultar el modal
-  public ocultarModal: boolean = false;
-
-  constructor() { }
+  // Acá colocamos la inyqcción del servicio como publica para poder usarla del lado del html,
+  // en caso contrario la dejamos como privada cuando la usamos solo en el componente .ts
+  constructor( public modalImagenService: ModalImagenService ) { }
 
   ngOnInit(): void {
   }
 
   cerrarModal() {
-    this.ocultarModal = true;
+    this.modalImagenService.cerrarModal();
   }
 
 }

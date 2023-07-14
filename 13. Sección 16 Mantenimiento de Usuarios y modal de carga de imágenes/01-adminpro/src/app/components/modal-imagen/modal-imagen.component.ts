@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import Swal from 'sweetalert2';
 
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 
@@ -18,7 +20,7 @@ export class ModalImagenComponent implements OnInit {
 
   // Acá colocamos la inyqcción del servicio como publica para poder usarla del lado del html,
   // en caso contrario la dejamos como privada cuando la usamos solo en el componente .ts
-  constructor( public modalImagenService: ModalImagenService ) { }
+  constructor( public modalImagenService: ModalImagenService, public fileUploadService: FileUploadService ) { }
 
   ngOnInit(): void {
   }
@@ -57,6 +59,26 @@ export class ModalImagenComponent implements OnInit {
 
     return;
 
+  }
+
+  subirImagen() {
+
+    const id = this.modalImagenService.id;
+    const tipo = this.modalImagenService.tipo;
+
+    this.fileUploadService.actualizarFoto( this.imagenSubir, tipo, id )
+    .then( img => {
+      if ( img != null ){
+        Swal.fire('Guardado', 'Imagen de usuario actualizada', 'success');
+        // Emitimos el valor con el observable que creamos en el modal-imagen.service.ts
+        // para detectar el cambio de la imágen para que la cargue en la tabla
+        this.modalImagenService.nuevaImagen.emit(img);
+
+        this.cerrarModal();
+      } else{
+        Swal.fire('Error', 'No se pudo subir la imágen', 'error');
+      }
+    });
   }
 
 }

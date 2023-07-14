@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
+import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { BusquedasService } from 'src/app/services/busquedas.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,10 +14,15 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styles: [
   ]
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, OnDestroy {
 
   public totalUsuarios: number = 0;
   public usuarios: Usuario[] = [];
+
+  // Propiedad para quitar la suscripción al observable que actualiza la imágen
+  // para evitar tener fugas de memoria
+  public imgSubs!: Subscription;
+
   // Propiedad para tener la referencia a la página actual
   public desde: number = 0;
   // Propiedad para almacenar los usuarios actuales
@@ -30,6 +37,19 @@ export class UsuariosComponent implements OnInit {
 
     this.cargarUsuarios();
 
+    // Nos subscribimos al observable que creamos en el modal-imagen.service.ts y que se encarga de emitir un valor
+    // con el fin de cargar la nueva imágen
+    this.imgSubs = this.modalImgenService.nuevaImagen
+    .pipe(
+      delay(1000)
+    ).subscribe( img => {
+        this.cargarUsuarios() 
+      });
+
+  }
+
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
   }
 
   // Método para cargar usuarios

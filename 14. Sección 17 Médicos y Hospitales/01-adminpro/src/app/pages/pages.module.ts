@@ -7,6 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 
+// Pipes
+import { PipesModule } from '../pipes/pipes.module';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -40,7 +43,8 @@ import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
     FormsModule,
     SharedModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     AccountSettingsComponent,

@@ -7,16 +7,33 @@ const Hospital = require('../models/hospital');
 
 const getHospitales = async(req, res = response) => {
 
+    // Implementación de la paginación para hospitales
+    //--------------------
+    // Paginación Forma 2
+    //--------------------
+    const desde = Number(req.query.desde) || 0;
+
     // Obtenemos los hospitales, adicionalmente también obtenemos el nombre no solo el id de
     // quién lo creo usando el método populate indicando que vamos a llamar y como segundo
     // parámetro indicamos los campos que necesitemos como por ejemplo el nombre, el email, etc
-    const hospitales = await Hospital.find()
-                                     .populate('usuario', 'nombre img');
+    const [hospitales, total] = await  Promise.all([
+        Hospital
+                .find({}, 'nombre')
+                // Usamos el skip para que se salte todos los registros que están antes del desde
+                .skip( desde )
+                .populate('usuario', 'nombre img')
+                // Establecemos el limite que indica cuantos registros voy a mostrar por página
+                .limit( 5 ),
+
+        Hospital.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        msg: hospitales
-    })
+        hospitales,
+        uid: req.uid,
+        total
+    });
 
 }
 

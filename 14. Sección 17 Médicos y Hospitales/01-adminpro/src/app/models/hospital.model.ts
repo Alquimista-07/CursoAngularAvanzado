@@ -17,17 +17,7 @@ export class Hospital {
 
 export interface HospitalInterface {
 
-    ok: boolean;
-    hospitales: Hospitales[];
-    uid: string;
     total: number;
-
-}
-
-interface Hospitales {
-
-    _id: string;
-    nombre: string;
-    usuario: _HospitalUser;
+    hospitales: Hospital[];
 
 }

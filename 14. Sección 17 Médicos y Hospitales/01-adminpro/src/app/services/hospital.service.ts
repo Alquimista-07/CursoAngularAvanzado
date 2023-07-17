@@ -31,8 +31,16 @@ export class HospitalService {
     const url = `${ base_url }/hospitales?desde=${ desde }`;
     return this.http.get<HospitalInterface>( url, this.headers )
                .pipe(
-                  map( (resp: {ok: boolean, hospitales: Hospital[], total: number }) => resp.hospitales )
-               )
+                  map( resp => {
+                    // Arreglo de tipo hospitales
+                    const hospitales = resp.hospitales.map(
+                      hospital => new Hospital( hospital.nombre, hospital._id, hospital.img, hospital.usuario ) 
+                      );
+                    return {
+                      total: resp.total,
+                      hospitales
+                    }
+                  }))
 
   }
 

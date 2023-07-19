@@ -97,7 +97,7 @@ export class HospitalesComponent implements OnInit {
             .subscribe( resp => {
               Swal.fire(
                 'Eliminado!',
-                `El usuario ${ hospital.nombre } ha sido eliminado.`,
+                `El ${ hospital.nombre } ha sido eliminado.`,
                 'success'
                 )
               this.cargarHospitales();

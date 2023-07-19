@@ -13,12 +13,12 @@ export class Medico {
         public _id?: string,
         public img?: string,
         public usuario?: _MedicolUser,
-        public hospita?: Hospital
+        public hospital?: Hospital
     ){}
 
 }
 
-export interface HospitalInterface {
+export interface MedicoInterface {
 
     total: number;
     medicos: Medico[];

@@ -10,7 +10,8 @@
     </div>
   </div>
   
-  <div class="row animated fadeIn fast">
+  <div class="row animated fadeIn fast"
+       *ngIf="cargando">
       <div class="col-12">
   
         <div class="alert alert-info text-center">
@@ -22,11 +23,12 @@
       </div>
     </div>
   
-  <div class="row">
+  <div class="row"
+       *ngIf="!cargando">
       <div class="col-12">
           <div class="card">
               <div class="card-body">
-                  <h4 class="card-title">Médicos</h4>
+                  <h4 class="card-title">Médicos ({{ totalMedicos }})</h4>
                   <h6 class="card-subtitle">Médicos registrados en la aplicación</h6>
                   <div class="table-responsive">
                       <table class="table table-bordered">
@@ -38,9 +40,16 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td>Lunar probe project</td>
-                                  <td>Lunar probe project</td>
+                              <tr *ngFor="let medico of medicos">
+                                  <td class="text-center">
+                                    <img [src]="medico.img! | imagen:'medicos'" 
+                                         alt="medico.nombre"
+                                         class="w100 cursor"
+                                         (click)="abrirModal( medico )">
+                                  </td>
+                                  <td>
+                                    {{ medico.nombre }}
+                                  </td>
   
                                   <td class="text-nowrap text-center">
                                       <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
@@ -51,9 +60,9 @@
                       </table>
                   </div>
   
-                  <button class="btn btn-secondary">Anterior</button>
+                  <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button>
                   &nbsp;
-                  <button class="btn btn-secondary">Siguiente</button>
+                  <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
   
               </div>
           </div>

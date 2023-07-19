@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-
-import { Hospital } from 'src/app/models/hospital.model';
-import { HospitalService } from 'src/app/services/hospital.service';
-import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { delay } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+
+import { Hospital } from 'src/app/models/hospital.model';
+
+import { HospitalService } from 'src/app/services/hospital.service';
+import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+import { BusquedasService } from 'src/app/services/busquedas.service';
 
 @Component({
   selector: 'app-hospitales',
@@ -29,7 +31,7 @@ export class HospitalesComponent implements OnInit {
 
   private imgSubs!: Subscription;
 
-  constructor( private hospitalService: HospitalService, private modalImgenService: ModalImagenService ) { }
+  constructor( private hospitalService: HospitalService, private modalImgenService: ModalImagenService, private busquedaService: BusquedasService ) { }
 
   ngOnInit(): void {
 
@@ -93,7 +95,7 @@ export class HospitalesComponent implements OnInit {
 
   async abrirSweetAlertCrearHospital() {
 
-    const { value } = await Swal.fire<string>({
+    const { value = '' } = await Swal.fire<string>({
       title: 'Crear hospital',
       text: 'Ingrese el nombre del nuevo hospital',
       input: 'text',
@@ -108,13 +110,30 @@ export class HospitalesComponent implements OnInit {
             Swal.fire('Creado', 'Hospital creado correctamente', 'success');
           });
     } else {
-      Swal.fire('Error', 'Por favor ingrese el nombre de un hospital', 'error');
+      Swal.fire('Información', 'No ingreso el nombre de un hospital', 'warning');
     }
   }
 
   abrirModal( hospital: Hospital ) {
     this.modalImgenService.abrirModal('hospitales', hospital._id!, hospital.img );
 
+  }
+
+  // Método para buscar usuarios o médicos u hospitales
+  buscar ( termino: string ){
+    
+    if( termino.length === 0){
+      return this.hospitales = this.hospitalesTemp;
+    }
+
+    this.busquedaService.bucar( 'hospitales', termino )
+        .subscribe( resultados => {
+
+          this.hospitales = resultados;
+          
+        });
+
+    return;
   }
 
 }

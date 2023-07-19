@@ -7,13 +7,28 @@ const Medico = require('../models/medico');
 
 const getMedicos = async(req, res = response) => {
 
-    const medicos = await Medico.find()
+    // Implementación de la paginación para los médicos
+    //--------------------
+    // Paginación Forma 2
+    //--------------------
+    const desde = Number( req.query.desde ) || 0;
+
+    const [medicos, total] = await Promise.all([
+        Medico
+                                .find({}, 'nombre img')
+                                // Usamos el skip para que se salte todos los registros que están antes del desde
+                                .skip( desde )
                                 .populate('usuario', 'nombre img')
-                                .populate('hospital', 'nombre');
+                                .populate('hospital', 'nombre')
+                                // Establecemos el limite que indica cuantos registros voy a mostrar por página
+                                .limit( 5 ),
+        Medico.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        medicos
+        medicos,
+        total
     })
 
 }

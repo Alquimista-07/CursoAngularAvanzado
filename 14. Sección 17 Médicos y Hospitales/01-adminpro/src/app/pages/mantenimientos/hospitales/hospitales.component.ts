@@ -90,7 +90,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   borrarHospital( hospital: Hospital ){
 
     Swal.fire({
-      title: '¿Borrar usuario?',
+      title: '¿Borrar hospital?',
       text: `Esta a punto de borrar a ${ hospital.nombre }`,
       icon: 'question',
       showCancelButton: true,

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+
 import { Hospital } from 'src/app/models/hospital.model';
 import { HospitalService } from 'src/app/services/hospital.service';
+import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+import { delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hospitales',
@@ -22,11 +27,17 @@ export class HospitalesComponent implements OnInit {
   public hospitales: Hospital[] = [];
   public cargando: boolean = true;
 
-  constructor( private hospitalService: HospitalService ) { }
+  private imgSubs!: Subscription;
+
+  constructor( private hospitalService: HospitalService, private modalImgenService: ModalImagenService ) { }
 
   ngOnInit(): void {
 
     this.cargarHospitales();
+
+    this.imgSubs = this.modalImgenService.nuevaImagen
+        .pipe( delay( 1000 ) )
+        .subscribe( img => this.cargarHospitales() );
 
   }
 
@@ -58,6 +69,51 @@ export class HospitalesComponent implements OnInit {
     }
 
     this.cargarHospitales();
+
+  }
+
+  guardarCambios( hospital: Hospital ){
+
+    this.hospitalService.actualizarHospital( hospital._id!, hospital.nombre )
+        .subscribe( resp => {
+          Swal.fire( 'Actualizado', `${ hospital.nombre } actualizado correctamente`, 'success' );
+        });
+
+  }
+
+  borrarHospital( hospital: Hospital ){
+
+    this.hospitalService.borrarHospital( hospital._id! )
+        .subscribe( resp => {
+          this.cargarHospitales();
+          Swal.fire( 'Borrado', `${ hospital.nombre } eliminado correctamente`, 'success' );
+        });
+
+  }
+
+  async abrirSweetAlertCrearHospital() {
+
+    const { value } = await Swal.fire<string>({
+      title: 'Crear hospital',
+      text: 'Ingrese el nombre del nuevo hospital',
+      input: 'text',
+      inputPlaceholder: 'Nombre del hospital',
+      showCancelButton: true
+    })
+
+    if( value?.trim().length! > 0 ){
+      this.hospitalService.crearHospital( value! )
+          .subscribe( ( resp: any ) => {
+            this.hospitales.push( resp.hospital );
+            Swal.fire('Creado', 'Hospital creado correctamente', 'success');
+          });
+    } else {
+      Swal.fire('Error', 'Por favor ingrese el nombre de un hospital', 'error');
+    }
+  }
+
+  abrirModal( hospital: Hospital ) {
+    this.modalImgenService.abrirModal('hospitales', hospital._id!, hospital.img );
 
   }
 

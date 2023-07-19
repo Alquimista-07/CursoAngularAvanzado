@@ -18,10 +18,10 @@ const getHospitales = async(req, res = response) => {
     // parámetro indicamos los campos que necesitemos como por ejemplo el nombre, el email, etc
     const [hospitales, total] = await  Promise.all([
         Hospital
-                .find({}, 'nombre')
+                .find({}, 'nombre img')
                 // Usamos el skip para que se salte todos los registros que están antes del desde
                 .skip( desde )
-                .populate('usuario', 'nombre img')
+                .populate('usuario', 'img')
                 // Establecemos el limite que indica cuantos registros voy a mostrar por página
                 .limit( 5 ),
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { delay } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { BusquedasService } from 'src/app/services/busquedas.service';
   styles: [
   ]
 })
-export class HospitalesComponent implements OnInit {
+export class HospitalesComponent implements OnInit, OnDestroy {
 
   // Propiedad para tener el total de usuarios
   public totalHospitales: number = 0;
@@ -41,6 +41,10 @@ export class HospitalesComponent implements OnInit {
         .pipe( delay( 1000 ) )
         .subscribe( img => this.cargarHospitales() );
 
+  }
+
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
   }
 
   cargarHospitales() {

@@ -85,11 +85,27 @@ export class HospitalesComponent implements OnInit {
 
   borrarHospital( hospital: Hospital ){
 
-    this.hospitalService.borrarHospital( hospital._id! )
-        .subscribe( resp => {
-          this.cargarHospitales();
-          Swal.fire( 'Borrado', `${ hospital.nombre } eliminado correctamente`, 'success' );
-        });
+    Swal.fire({
+      title: '¿Borrar usuario?',
+      text: `Esta a punto de borrar a ${ hospital.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrarlo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.hospitalService.borrarHospital( hospital._id! )
+            .subscribe( resp => {
+              Swal.fire(
+                'Eliminado!',
+                `El usuario ${ hospital.nombre } ha sido eliminado.`,
+                'success'
+                )
+              this.cargarHospitales();
+            });
+      }
+    });
+
+
 
   }
 

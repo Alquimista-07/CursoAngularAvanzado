@@ -15,6 +15,9 @@ export class MedicoComponent implements OnInit {
   public medicoForm!: FormGroup;
   public hospitales: Hospital[] = [];
 
+  // Propiedad para mostrar el hospital
+  public hospitalSeleccionado: Hospital | any;
+
   constructor( private fb: FormBuilder, private hospitalService: HospitalService ) { }
 
   ngOnInit(): void {
@@ -25,6 +28,13 @@ export class MedicoComponent implements OnInit {
     });
 
     this.cargarHospitales();
+
+    // Creamos un observable que este pendiente del hospital
+    // Para este caso el observable que usamos es el valueChanges
+    this.medicoForm.get('hospital')?.valueChanges
+        .subscribe( hospitalId => {
+        this.hospitalSeleccionado = this.hospitales.find( hosp => hosp._id === hospitalId );
+        });
 
   }
 

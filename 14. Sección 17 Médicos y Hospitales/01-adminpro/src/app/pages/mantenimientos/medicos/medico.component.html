@@ -5,7 +5,9 @@
                 <h4 class="card-title">Médico</h4>
                 <h6 class="card-subtitle">Actualizar Información</h6>
                 
-                <form class="form-horizontal p-t-20">
+                <form class="form-horizontal p-t-20"
+                      [formGroup]="medicoForm"
+                      (submit)="guardarMedico()">
 
                     <div class="form-group row">
                         <label for="exampleInputuname" class="col-sm-3 control-label">Foto</label>
@@ -22,7 +24,11 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="ti-user"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" placeholder="Nombre del médico">
+                                <input type="text" 
+                                       formControlName="nombre"
+                                       class="form-control" 
+                                       id="exampleInputuname" 
+                                       placeholder="Nombre del médico">
                             </div>
                         </div>
                     </div>
@@ -32,16 +38,21 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-hospital-o"></i></div>
-                                <select class="form-control">
-                                    <option>Hospital 1</option>
-                                    <option>Hospital 2</option>
-                                    <option>Hospital 3</option>
+                                <select class="form-control"
+                                        formControlName="hospital">
+                                    <option value="">Seleccione Hospital</option>
+                                    <option *ngFor="let hospital of hospitales"
+                                            [value]="hospital._id">
+                                            {{ hospital.nombre }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                    <button type="submit" 
+                            class="btn btn-success waves-effect waves-light m-r-10"
+                            [disabled]="medicoForm.invalid">
                         <i class="fa fa-save"></i>
                         Guardar
                     </button>

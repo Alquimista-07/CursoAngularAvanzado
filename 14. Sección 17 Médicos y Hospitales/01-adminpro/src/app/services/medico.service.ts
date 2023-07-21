@@ -46,6 +46,18 @@ export class MedicoService {
 
   }
 
+  obtenerMedicoPorId( id: string ){
+
+    const url = `${ base_url }/medicos/${ id }`;
+    return this.http.get( url, this.headers )
+               .pipe(
+                map( (resp: {ok: boolean, medico: Medico[]} | any) => {
+                  return resp.medico;
+                })
+               )
+
+  }
+
   crearMedico( medico: { nombre: string, hospital: string } ) {
 
     // http://localhost:3000/api/medicos

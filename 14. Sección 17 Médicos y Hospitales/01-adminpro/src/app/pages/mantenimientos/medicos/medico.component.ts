@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { Hospital } from 'src/app/models/hospital.model';
@@ -27,9 +27,15 @@ export class MedicoComponent implements OnInit {
   public medicoSeleccionado!: Medico;
 
   constructor( private fb: FormBuilder, private hospitalService: HospitalService, private medicoService: MedicoService,
-               private router: Router ) { }
+               private router: Router, private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
+
+    // NOTA: Necesitamos el id del médico, y lo vamos a manejar como una subscripción, ya que puede ser que estemos en la misma pantall
+    //       y el url puede cambiar, podemos hacerlo por el snapshot pero el snapchot no cambia una vez se lee, por lo tanto lo vamos 
+    //       a obtener suscribiendonos a la ruta activa usando el activatedRoute
+    this.activatedRoute.params
+                       .subscribe( ({id}) => this.cargarMedico( id ) );
 
     this.medicoForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -44,6 +50,16 @@ export class MedicoComponent implements OnInit {
         .subscribe( hospitalId => {
         this.hospitalSeleccionado = this.hospitales.find( hosp => hosp._id === hospitalId );
         });
+
+  }
+
+  cargarMedico( id: string ){
+     console.log(id);
+     this.medicoService.obtenerMedicoPorId( id )
+         .subscribe( medico => {
+          console.log(medico);
+          this.medicoSeleccionado = medico;
+         })
 
   }
 

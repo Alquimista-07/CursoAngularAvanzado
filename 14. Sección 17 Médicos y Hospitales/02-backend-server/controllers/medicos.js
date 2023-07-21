@@ -33,6 +33,31 @@ const getMedicos = async(req, res = response) => {
 
 }
 
+// Obtener información del médico por id
+const getMedicosById = async(req, res = response) => {
+
+    const id = req.params.id;
+
+    try {
+
+        const medico = await Medico.findById( id )
+                                    .populate('usuario', 'nombre img')
+                                    .populate('hospital', 'nombre');
+        res.json({
+            ok: true,
+            medico
+        });
+
+    } catch (err){
+        console.log(err);
+        res.json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        })
+    }
+
+}
+
 const crearMedico = async(req, res = response) => {
 
     // Extraemos el id del usuario ya que como pase por la verificación del token ya la debería tener acá
@@ -147,5 +172,6 @@ module.exports = {
     getMedicos,
     crearMedico,
     actualizarMedico,
-    borrarMedico
+    borrarMedico,
+    getMedicosById
 }

@@ -54,24 +54,57 @@ export class MedicoComponent implements OnInit {
   }
 
   cargarMedico( id: string ){
-     console.log(id);
+
+    if( id === 'nuevo' ){
+      return;
+    }
+
+    // Si pasa de la anterior validación significa que tengo un id en teoría válido de mongo
      this.medicoService.obtenerMedicoPorId( id )
          .subscribe( medico => {
-          console.log(medico);
+
+          // Si el médico no existe significa que la persona cambio el url de un médico que no existe
+          // por lo tanto controlamos para que no suceda un error y lo sacamos de la pantalla
+          if( !medico ){
+            return this.router.navigateByUrl('/dashboard/medicos');
+          }
+
+          // NOTA: Desestructuramos para obtener los valores que necesitamos que es el nombre del médico
+          //       y dentro del objeto hospital obtenemos solo el id, esto con el fin de poder establecerle 
+          //       dichos valores al formulario
+          const { nombre, hospital: { _id } }  = medico;
           this.medicoSeleccionado = medico;
-         })
+          // Establecemos los valores al formulario
+          this.medicoForm.setValue( { nombre, hospital: _id } )
+          return;
+         });
 
   }
 
   guardarMedico() {
+
     const { nombre } = this.medicoForm.value;
-    this.medicoService.crearMedico( this.medicoForm.value )
-        .subscribe( (resp: any) =>{
-          console.log(resp);
-          Swal.fire( 'Creado', `${ nombre } creado exitosamente`, 'success');
-          // Una vez creado hacemos la redirección a la misma pantalla pero con la información que estoy esperando
-          this.router.navigateByUrl(`/dashboard/medico/${ resp.medico._id }`)
-        })
+
+    if( this.medicoSeleccionado ){
+      // Actualizar
+      const data = {
+        ...this.medicoForm.value,
+        _id: this.medicoSeleccionado._id
+      }
+      this.medicoService.actualizarMedico( data )
+          .subscribe( resp => {
+            Swal.fire( 'Actualizado', `${ nombre } actualizado exitosamente`, 'success');
+          })
+    } else {
+      // Crear
+      this.medicoService.crearMedico( this.medicoForm.value )
+          .subscribe( (resp: any) =>{
+            Swal.fire( 'Creado', `${ nombre } creado exitosamente`, 'success');
+            // Una vez creado hacemos la redirección a la misma pantalla pero con la información que estoy esperando
+            this.router.navigateByUrl(`/dashboard/medico/${ resp.medico._id }`)
+          })
+    }
+
   }
 
   cargarHospitales() {

@@ -8,6 +8,7 @@ import { Medico } from 'src/app/models/medico.model';
 
 import { HospitalService } from 'src/app/services/hospital.service';
 import { MedicoService } from 'src/app/services/medico.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-medico',
@@ -61,6 +62,12 @@ export class MedicoComponent implements OnInit {
 
     // Si pasa de la anterior validación significa que tengo un id en teoría válido de mongo
      this.medicoService.obtenerMedicoPorId( id )
+         // Para solucionar el tema de que la imágen del hospital no se alcanza a cargar debido a la rapidez con la que se hace
+         // y a veces no la alcanza a detecta, lo que podemos hacer es darle una pequña espera.
+         // Por lo tanto esperamos 100 milésimas de segundo antes de establecer los valores
+         .pipe(
+          delay( 100 )
+         )
          .subscribe( medico => {
 
           // Si el médico no existe significa que la persona cambio el url de un médico que no existe

@@ -48,9 +48,21 @@ export class UsuarioService {
     }
   }
 
+  // Guardar información en el localStorage
+  guardarLocalStorage( token: string, menu: any ){
+    // Grabar token en el LocalStorage
+    localStorage.setItem('token', token);
+    // Grabar el menu en el localstorage convirtiendolo en un string ya que el LocalStorage solo permite grabar strings y lo que
+    // estamos recibiendo en el menu es un arreglo
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   // Método para cerrar sesión
   logout() {
     localStorage.removeItem('token');
+
+    // Borrar menu del localStorage
+    localStorage.removeItem('menu');
 
     // Quitamos el usuario de google y navegamos
     // NOTA: Acá se revoca es el correo en google identity, de momento esta un correo estático pero luego se va a ajustar
@@ -86,7 +98,8 @@ export class UsuarioService {
         //
         this.usuario = new Usuario(nombre, email, '', img, google, role, uid);
 
-        localStorage.setItem('token', resp.token);
+        // Llamado función para grabar en el LocalStorage
+        this.guardarLocalStorage( resp.token, resp.menu );
 
         return true;
       }),
@@ -106,9 +119,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios`, formData)
       .pipe(
         tap((resp: any) => {
-          // Extraemos el token para grabarlo en el localStorage
-          // La función setItem del localStorage recibe como primer argumento que es como vamos a llamar la llave y como segundo parametro el valor
-          localStorage.setItem('token', resp.token);
+          // Llamado función para grabar en el LocalStorage
+          this.guardarLocalStorage( resp.token, resp.menu );
         })
       );
   }
@@ -134,9 +146,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formLoginData)
       .pipe(
         tap((resp: any) => {
-          // Extraemos el token para grabarlo en el localStorage
-          // La función setItem del localStorage recibe como primer argumento que es como vamos a llamar la llave y como segundo parametro el valor
-          localStorage.setItem('token', resp.token);
+          // Llamado función para grabar en el LocalStorage
+          this.guardarLocalStorage( resp.token, resp.menu );
         })
       );
   }
@@ -147,8 +158,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login/google`, { token })
       .pipe(
         tap((resp: any) => {
-          // console.log(resp);
-          localStorage.setItem('token', resp.token);
+          // Llamado función para grabar en el LocalStorage
+          this.guardarLocalStorage( resp.token, resp.menu );
         })
       );
 

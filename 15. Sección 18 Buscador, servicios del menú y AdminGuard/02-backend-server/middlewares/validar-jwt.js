@@ -78,8 +78,49 @@ const validarADMIN_ROLE = async ( req, res, next ) => {
 
 }
 
+// Middelware para validar el ADMIN_ROLE o mismo usuario
+const validarADMIN_ROLE_o_MismoUsuario = async ( req, res, next ) => {
+
+    const uid = req.uid;
+    const id = req.params.id;
+
+    try {
+
+        const usuarioDB = await Usuario.findById( uid );
+
+        if( !usuarioDB ){
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no existe'
+            });
+        }
+
+        // Si existe el usuario pero no es administrador o si es un usuario que esta tratando de actualizar su propio perfil
+        if( usuarioDB.role === 'ADMIN_ROLE' || uid === id ){
+
+            // Si logra pasar la validación llamamos el next
+            next();
+
+        } else {
+            return res.status(403).json({
+                ok: false,
+                msg: 'El usuario no cuenta con los permisos para realizar la operación'
+            });
+        }
+
+    } catch( err ){
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
 // Exportamos
 module.exports = {
     validarJWT,
-    validarADMIN_ROLE
+    validarADMIN_ROLE,
+    validarADMIN_ROLE_o_MismoUsuario
 }

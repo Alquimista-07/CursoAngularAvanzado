@@ -20,4 +20,10 @@ export class HeaderComponent {
     this.usuarioService.logout();
   }
 
+  buscarTodo( txtBuscarTodo: string ){
+
+    console.log(txtBuscarTodo);
+
+  }
+
 }

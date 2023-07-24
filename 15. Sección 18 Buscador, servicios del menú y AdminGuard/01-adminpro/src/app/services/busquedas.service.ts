@@ -46,6 +46,14 @@ export class BusquedasService {
     return resultados;
   }
 
+  // Servicio para realizar búsquedas globales en todas las colecciones de usuarios, médicos y hospitales
+  busquedaGlobal( termino: string ){
+
+    const url = `${ base_url }/todo/${ termino }`;
+    return this.http.get( url, this.headers );
+
+  }
+
   // Servicio centralizado para buscar usuarios, médicos y hospitales
   bucar( tipo: 'usuarios' | 'medicos' | 'hospitales', termino: string ) {
     const url = `${base_url}/todo/coleccion/${ tipo }/${ termino }`;

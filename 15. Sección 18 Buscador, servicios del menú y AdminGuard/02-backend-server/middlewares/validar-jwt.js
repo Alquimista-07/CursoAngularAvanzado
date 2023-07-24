@@ -1,8 +1,11 @@
-// Middleware para validar JWT
+// Middleware para validar JWT y validar el role de los usuarios
 
 const jwt = require('jsonwebtoken');
 
 const { response } = require("express");
+
+// Tomamos el modelo y verificamos en el modelo directamente en la base de datos si tiene el ADMIN_ROLE
+const Usuario = require('../models/usuario');
 
 const validarJWT = ( req, res = response, next ) => {
 
@@ -37,7 +40,46 @@ const validarJWT = ( req, res = response, next ) => {
 
 }
 
+// Metodo para validar el role del lado del backend con el fin de que un usuario con un role diferente
+// a administrador pueda cambiar o actualizar la información de cualquier usuario
+const validarADMIN_ROLE = async ( req, res, next ) => {
+
+    const uid = req.uid;
+
+    try {
+
+        const usuarioDB = await Usuario.findById( uid );
+
+        if( !usuarioDB ){
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no existe'
+            });
+        }
+
+        // Si existe el usuario pero no es administrador
+        if( usuarioDB.role !== 'ADMIN_ROLE' ){
+            return res.status(403).json({
+                ok: false,
+                msg: 'El usuario no cuenta con los permisos para realizar la operación'
+            });
+        }
+
+        // Si logra pasar la validación llamamos el next
+        next();
+
+    } catch( err ){
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
 // Exportamos
 module.exports = {
-    validarJWT
+    validarJWT,
+    validarADMIN_ROLE
 }

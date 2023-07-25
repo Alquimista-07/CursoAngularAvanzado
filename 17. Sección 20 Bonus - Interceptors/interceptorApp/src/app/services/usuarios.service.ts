@@ -17,30 +17,14 @@ export class UsuariosService {
     let params = new HttpParams().append('page', '2');
     params = params.append('nombre', 'Fernando');
 
-    // const headers = new HttpHeaders({
-    //   'token-usuario': 'ABC123'
-    // });
-
-    return this.http.get('https://reqres.in/api/users', {
-    // return this.http.get('https://reqres-error.in/api/users', {
-      params,
-      // headers
+    // return this.http.get('https://reqres.in/api/users', {
+    return this.http.get('https://reqres-error.in/api/users', {
+      params
     }).pipe(
       map( (resp: any) => resp['data'] ),
-
-      catchError( this.manejarError )
-
     );
 
   }
 
-  manejarError( error: HttpErrorResponse ){
-
-    console.log('Sucedió un error');
-    console.log('Registrado el el logfile');
-    console.warn(error);
-    return throwError('Error personalizado');
-
-  }
 
 }

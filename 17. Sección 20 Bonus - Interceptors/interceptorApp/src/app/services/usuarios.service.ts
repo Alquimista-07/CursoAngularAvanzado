@@ -17,14 +17,14 @@ export class UsuariosService {
     let params = new HttpParams().append('page', '2');
     params = params.append('nombre', 'Fernando');
 
-    const headers = new HttpHeaders({
-      'token-usuario': 'ABC123'
-    });
+    // const headers = new HttpHeaders({
+    //   'token-usuario': 'ABC123'
+    // });
 
-    // return this.http.get('https://reqres.in/api/users', {
-    return this.http.get('https://reqres-error.in/api/users', {
+    return this.http.get('https://reqres.in/api/users', {
+    // return this.http.get('https://reqres-error.in/api/users', {
       params,
-      headers
+      // headers
     }).pipe(
       map( (resp: any) => resp['data'] ),
 

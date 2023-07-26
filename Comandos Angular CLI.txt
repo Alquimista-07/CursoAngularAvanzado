@@ -147,3 +147,26 @@ NOTA: El siguiente enlace nos dirige a la documentación oficial de Angular CLI:
 	git config --system core.longpaths true
 	
 ----------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------
+PRUEBAS
+------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------
+* El siguiente comando a parte de lanzar un navegador web va a lanzar las pruebas que tengamos configuradas
+  en nuestro código. Y dichas pruebas las realiza sobre su propio framework de pruabas llamdo jasmine el CursoAngularAvanzado
+  ya tiene todo listo para poder realizar pruebas.
+
+	ng test
+
+  NOTA: Adicionalmente todos los archivos que se encuentren dentro de nuestro proyecto y que contengan la extensión .spec.ts 
+        corresponden a los archivos y son los que va a usar jasmin para probar ya que dichos archivos son los que contienen 
+		las pruebas. También hay que aclarar que si queremos omitir alguna prueba para que no se realice, simplemente lo que
+		tenemos que hacer es agregar una x antes del método que se quiere ignorar dentro del archivo .spec.ts
+
+		Si por ejemplo lo colocamos en el describe va a ingnorar todas las pruebas que se encuentren dentro de dicho componente
+		
+		Ejemplo: 
+				xdescribe('AppComponent', () => {
+	
+----------------------------------------------------------------------------------------------------------------

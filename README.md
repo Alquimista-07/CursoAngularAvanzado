@@ -99,3 +99,22 @@ git config --global user.email "Tu correo"
 * [Angular Inline](https://marketplace.visualstudio.com/items?itemName=natewallace.angular2-inline)
 
 * [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+
+# 
+# ANOTACIONES IMPORTANTES SOBRE DUDAS
+
+Creo que lo primero es dejar bien en claro las definiciones:
+
+`imports` hace que las declaraciones exportadas de otros módulos estén disponibles en el módulo actual.
+
+`declarations` deben hacer que las directivas (incluidos los componentes y las tuberías) del módulo actual estén disponibles para otras directivas en el módulo actual. Los selectores de directivas, componentes o tuberías solo se comparan con el HTML si se declaran o importan.
+
+`providers` son para hacer que los servicios y valores sean conocidos por DI (inyección de dependencia). Se agregan al ámbito raíz y se inyectan a otros servicios o directivas que los tienen como dependencia.
+
+Entendiendo estos conceptos se puede decir: 
+
+* Los `imports` se utilizan para importar módulos de soporte como FormsModule, RouterModule, CommonModule o cualquier otro módulo de características personalizado.
+
+* los `declarations` se utilizan para declarar componentes, directivas, pipes que pertenecen al módulo actual. 
+
+* Los `Providers` se utilizan para inyectar los servicios requeridos por componentes, directivas, tuberías en el módulo.

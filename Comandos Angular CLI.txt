@@ -149,7 +149,10 @@ NOTA: El siguiente enlace nos dirige a la documentación oficial de Angular CLI:
 ----------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------
-PRUEBAS
+PRUEBAS: 
+        NOTA: En cuanto a las pruebas hay que tener en cuenta que
+              si no podemos probar todo, al menos debemos probar 
+	          lo mínimo necesario para que funcione la aplicación
 ------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------
@@ -169,4 +172,18 @@ PRUEBAS
 		Ejemplo: 
 				xdescribe('AppComponent', () => {
 	
+----------------------------------------------------------------------------------------------------------------
+
+* El siguiente comando nos permite usar una herramienta que ya biene incluida en el Jasmine y que nos permite 
+  saber cuantas líneas de nuestro código estan cubiertas por pruebas, y nos va a ayudar a saber esto. Pero hay
+  que tener en cuenta de que este comando prueba las líneas de código y puede ser que necesitemos ejecutar alguna 
+  condición adicional o algo que no esta cubierto por lo que hace la herramienta. Pero de todas maneras este comandos
+  si nos va a dar un gran panorama de como las pruebas en forma global.
+
+	ng test --code-coverage
+
+  NOTA: Esto nos va a crear en el directorio del proyecto una carpeta que se llama coverage y la cual si la abrimos
+        vemos que tiene un index.html que si lo abrimos es un reporte en el cual se muestran graficamente como están
+		las pruebas.
+
 ----------------------------------------------------------------------------------------------------------------

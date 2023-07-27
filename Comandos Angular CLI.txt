@@ -171,6 +171,11 @@ PRUEBAS:
 		
 		Ejemplo: 
 				xdescribe('AppComponent', () => {
+		
+		Ahora si por ejemplo queremos solo ignorar una en espcífico lo haríamos sobre el it
+
+		Ejemplo:
+				xit('Esto es una prueba de strings', () => {)
 	
 ----------------------------------------------------------------------------------------------------------------
 

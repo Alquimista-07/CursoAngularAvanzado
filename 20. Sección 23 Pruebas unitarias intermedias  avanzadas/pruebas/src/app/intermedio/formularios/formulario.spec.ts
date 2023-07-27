@@ -20,4 +20,25 @@ describe('Pruebas de formularios', () => {
 
     });
 
+    it('El email debe de ser obligatorio', () => {
+
+        const campo = componente.form.get('email');
+
+        campo?.setValue('');
+
+        expect( campo?.valid ).toBeFalsy();
+
+    });
+
+    it('El email debe de ser un email válido', () => {
+
+        const campo = componente.form.get('email');
+
+        // campo?.setValue('test@'); // Falla no es válido
+        campo?.setValue('test@test.com');
+
+        expect( campo?.valid ).toBeTruthy();
+
+    });
+
 })

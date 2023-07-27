@@ -29,4 +29,15 @@ describe( 'Pruebas de strings', () => {
 
     });
 
+    // Comprobar que el resultado CONTENGA algo
+    it( 'Debe de retornar un saludo con el nombre enviado', () =>{
+
+        const nombre = 'Pedro';
+        const resp = mensaje( nombre );
+
+        // Evaluamos la respuesta
+        expect( resp ).toContain(nombre)
+
+    });
+
 });

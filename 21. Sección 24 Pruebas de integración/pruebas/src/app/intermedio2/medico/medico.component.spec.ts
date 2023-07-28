@@ -1,4 +1,5 @@
 import { MedicoComponent } from "./medico.component";
+import { HttpClientModule } from "@angular/common/http";
 
 // NOTA: La diferencia en las pruebas de integración básicamente radica en que yo necesito decirle
 //       a Angular que compile la forma para poder obtener acceso al html y otros componentes que 
@@ -13,6 +14,7 @@ import { MedicoComponent } from "./medico.component";
 //       controlar o tener acceso a todo el html, el DOM, poder hacer querys en los elementos usando JQuery
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { MedicoService } from "./medico.service";
 
 describe('Medico Component', () => {
 
@@ -26,6 +28,12 @@ describe('Medico Component', () => {
         TestBed.configureTestingModule({
             declarations: [
                 MedicoComponent
+            ],
+            providers: [
+                MedicoService
+            ],
+            imports: [
+                HttpClientModule
             ]
         });
 

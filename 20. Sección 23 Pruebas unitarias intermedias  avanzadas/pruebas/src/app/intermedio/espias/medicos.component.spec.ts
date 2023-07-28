@@ -1,6 +1,6 @@
 import { MedicosComponent } from './medicos.component';
 import { MedicosService } from './medicos.service';
-import { empty, from } from 'rxjs';
+import { empty, from, throwError } from 'rxjs';
 
 // NOTA: En las pruebas unitarias este es uno de los temas con mayor relevancia ya que en nuestros 
 //       códigos siempre llamamos endpoints y en las pruebas unitarias debemos crear mocks simulando 
@@ -94,6 +94,20 @@ describe('MedicosComponent', () => {
         componente.agregarMedico();
 
         expect( componente.medicos.indexOf( medico ) ).toBeGreaterThanOrEqual(0);
+
+    });
+
+    it( 'Si falla la adición, la propiedad mensajeError, debe ser igual al error del servicio', () => {
+
+        const miError = 'No se pudo agregar el médico';
+
+        spyOn( servicio, 'agregarMedico' ).and
+                .returnValue( throwError( miError ) );
+
+        
+        componente.agregarMedico();
+
+        expect( componente.mensajeError ).toBe( miError );
 
     });
 

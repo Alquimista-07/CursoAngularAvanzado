@@ -1,6 +1,6 @@
 import { MedicosComponent } from './medicos.component';
 import { MedicosService } from './medicos.service';
-import { from } from 'rxjs';
+import { empty, from } from 'rxjs';
 
 // NOTA: En las pruebas unitarias este es uno de los temas con mayor relevancia ya que en nuestros 
 //       códigos siempre llamamos endpoints y en las pruebas unitarias debemos crear mocks simulando 
@@ -56,7 +56,7 @@ describe('MedicosComponent', () => {
         spyOn( servicio, 'getMedicos' ).and.callFake( () => {
 
             const medicos = [ 'medico1', 'medico2', 'medico3'  ];
-            
+
             // Como el getMedicos retorna un observable nosotros tenemos que retornar también un observable
             return from( [ medicos ] );
         });
@@ -67,6 +67,20 @@ describe('MedicosComponent', () => {
 
    
     });
+
+    it( 'Debe de llamar al servidor par agregar un médico', () => {
+
+        const espia = spyOn( servicio, 'agregarMedico' ).and.callFake( medico => {
+
+            return empty();
+
+        });
+
+        componente.agregarMedico();
+
+        expect( espia ).toHaveBeenCalled();
+
+    })
 
 
 });

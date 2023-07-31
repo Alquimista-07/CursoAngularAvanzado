@@ -39,4 +39,26 @@ describe('Incremendator Component', () => {
 
     });
 
+    it('Debe de mostrar en el input el valor del progreso', () => {
+
+        component.cambiarValor(5);
+
+        fixture.detectChanges(); // Disparar la detección de cambios
+
+        // Como el ciclo de detección de cambios a veces puede ser un poco demorado, usamos la función
+        // whenStable() para hacer que espere hasta que termine la detección de cambios y este el elemento 
+        // listo
+        fixture.whenStable().then( () => {
+
+            // Hacemos una referencia al input
+            const input = fixture.debugElement.query( By.css('input') );
+            const elem = input.nativeElement;
+    
+            expect( elem.value ).toBe( '55' );
+
+        });
+
+
+    });
+
 });

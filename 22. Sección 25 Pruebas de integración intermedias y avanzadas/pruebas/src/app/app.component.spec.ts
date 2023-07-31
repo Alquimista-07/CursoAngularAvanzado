@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { By } from '@angular/platform-browser';
 
 import { RouterTestingModule } from '@angular/router/testing';
+import { RouterOutlet } from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -27,6 +29,14 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('pruebas');
   });
 
-  
+  it('Debe de tener un router-outlet', () => {
+
+    const fixture = TestBed.createComponent(AppComponent);
+    
+    const debugElement = fixture.debugElement.query( By.directive( RouterOutlet ) );
+
+    expect( debugElement ).not.toBeNull();
+    
+  });
   
 });

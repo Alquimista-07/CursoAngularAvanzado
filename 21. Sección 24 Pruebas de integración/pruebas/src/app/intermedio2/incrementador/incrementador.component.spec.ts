@@ -77,4 +77,22 @@ describe('Incremendator Component', () => {
 
     });
 
+    it('En el titulo del componentem debe de mostrar el progreso', () => {
+
+        // Hacemos la referencia a los botones
+        // NOTA: El queryAll va a devolver todos los botones en forma de arreglo
+        const botones = fixture.debugElement.queryAll( By.css('.btn-primary') );
+
+        // Simulamos el click en el primer botón (Decrementar)
+        botones[0].triggerEventHandler('click', null); 
+        
+        // Detección de cambios
+        fixture.detectChanges();
+
+        const elem: HTMLElement = fixture.debugElement.query( By.css('h3') ).nativeElement;
+
+        expect( elem.innerHTML ).toContain('45');
+
+    });
+
 });

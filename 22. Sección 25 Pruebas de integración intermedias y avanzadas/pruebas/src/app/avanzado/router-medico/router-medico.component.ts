@@ -16,7 +16,7 @@ export class RouterMedicoComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params
         .subscribe( (params: any) => {
-          this.id = params['id']
+          this.id = params['id'] // nuevo
         });
   }
 

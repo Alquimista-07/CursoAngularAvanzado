@@ -61,4 +61,20 @@ describe('Incremendator Component', () => {
 
     });
 
+    it('Debe de incrementar/decrementar en 5, con un click en el botón', () => {
+
+        // Hacemos la referencia a los botones
+        // NOTA: El queryAll va a devolver todos los botones en forma de arreglo
+        const botones = fixture.debugElement.queryAll( By.css('.btn-primary') );
+        
+        // Simulamos el click en el primer botón (Decrementar)
+        botones[0].triggerEventHandler('click', null);
+        expect( component.progreso ).toBe(45);
+
+        // Simulamos el click en el segundo botón (Incrementar)
+        botones[1].triggerEventHandler('click', null);
+        expect( component.progreso ).toBe(50);
+
+    });
+
 });

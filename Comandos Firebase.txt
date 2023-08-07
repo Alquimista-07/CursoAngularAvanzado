@@ -1,0 +1,67 @@
+COMANDOS FUNCTIONS FIREBASE
+
+NOTA: Hay que tener en cuenta que el Cloud Funcitions de Firebase dejo de ser gratuito, por lo tanto es necesario
+      crear una cuenta de facturación asociada a un método de pago y cambiar el plan al plan de pago por uso.
+	  La unica ventaja es que para usar el servicio gratuito se cuenta con unos topes bastante altos por día los
+	  cuales si se sobrepasan si inicia el cobro por lo tanto hay que tener en cuenta y si no cambiar el plan cuando
+	  no se este usando el servicio o eliminar el proyecto.
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite loguear en firebase, para poder dar inicio con el proyecto
+-----------------------------------------------------------------------------------------------------------
+	
+	firebase login
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite cerrar sesión en firebase.
+-----------------------------------------------------------------------------------------------------------
+	
+	firebase logout
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite loguear inicializar un proyecto de firebase, para posteriormente dentro
+  de la linea de comandos seleccionar las opciones que queremos que tenga nuestro proyecto como por ejemplo
+  que sea un proyecto de funtions, que este asociado a un proyecto existente o crear uno nuevo, el lenguaje 
+  que queremos usar, etc.
+-----------------------------------------------------------------------------------------------------------
+	
+	firebase init
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite hacer el despliegue a producción y nos va a entregar una url
+  correspondiente al endpoint de nuestro servicio de functions en la nube y el cual es el que 
+  usaremos cuando la aplicación este desplegada en internet
+-----------------------------------------------------------------------------------------------------------
+
+	firebase deploy
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite levantar el servidor en modo de desarrollo y el cual nos va a entregar
+  una url correspondiente al endpoint del servidor local de desarrollo y el cual vamos a usar para hacer 
+  nuestras peticiones en desarrollo.
+-----------------------------------------------------------------------------------------------------------
+
+	firebase serve
+	
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando me permite compilar el proyecto en desarrollo para que tome los cambios y poder
+  verlos en desarrollo y no tener que estar desplegando cada vez a producción ya que este proceso es 
+  bastante demorado. Adicionalmente como el servicio de functions ya no es gratuito esto causa que se nos 
+  pueda generar algún costo innecesario mientras desarrollamos la aplicación.
+
+  NOTA: Hay que tener en cuenta que para ejecutar este comando debemos estar dentro del directorio de functions
+-----------------------------------------------------------------------------------------------------------
+
+	npm run build
+
+-----------------------------------------------------------------------------------------------------------
+* El siguiente comando hace que typescript este pendiente de cualquier cambio que realicemos en el proyecto
+  esto con el fin de no tener que estar compilando con el comando npm run build cada vez que hagamos un 
+  cambio.
+
+  NOTA: Hay que tener en cuenta que para ejecutar este comando debemos estar dentro del directorio de functions.
+        Adicionalmente si el comando no funciona lo más probable es que el paquete no este instalado por lo tanto
+		para instalarlo usamos el comando npm install -g typescript tsc-watch
+-----------------------------------------------------------------------------------------------------------
+
+	tsc --watch

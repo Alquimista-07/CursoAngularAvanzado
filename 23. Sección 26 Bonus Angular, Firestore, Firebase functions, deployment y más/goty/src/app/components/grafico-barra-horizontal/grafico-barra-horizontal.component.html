@@ -1,1 +1,45 @@
-<p>grafico-barra-horizontal works!</p>
+<!--Documentación Gráficos
+
+    NOTA: OJO la versión de graficas que estamos usando funciona con angular 14 hacia adelante, por lo tanto
+          realice un pequeño cambio actualizando la versión de angular a la ultima versión. Adicionalmente para 
+          no actualizar la versión de angular dentro del proyecto ejecutando los respectivos comandos ya que
+          dieron problemas lo que realice fue luego de actualizar el angular fue crear un proyecto vacío con el
+          mismo nombre para posteriormente copiar y reemplazar los archivos package.json y package-lock.json
+          dentro de este proyecto y así me evite problemas al realizar la actualización y además aprovechando
+          que en este punto el proyecto estaba reción iniciado.
+
+    https://github.com/swimlane/ngx-charts                                            -> Documentación 1
+    https://swimlane.gitbook.io/ngx-charts                                            -> Documentación 2
+    https://stackblitz.com/edit/vertical-bar-chart?embed=1&file=app/app.component.ts  -> Proyecto ejemplo de Angular el cual fue tomado del enlace de la documentación 2 que esta en el sitio oficial
+    https://swimlane.github.io/ngx-charts/#/ngx-charts/bar-vertical                   -> LiveDemo
+
+    ----------------------------------------------------------------------------------------------------
+    Comandos de instalacion de dependencias necesarias para usar las gráficas: 
+
+    1. npm install @angular/cdk --save
+    2. npm install @swimlane/ngx-charts --save
+    3. npm i --save @types/d3-shape
+    4. npm i --save @types/d3-scale
+    5. npm i --save @types/d3-selection
+    ----------------------------------------------------------------------------------------------------
+
+-->
+
+<div class="chart-container">
+
+    <ngx-charts-bar-horizontal
+      [scheme]="colorScheme"
+      [results]="results"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)"
+      style="fill: grey">
+    </ngx-charts-bar-horizontal>
+
+</div>

@@ -34,9 +34,30 @@ NOTA: Hay que tener en cuenta que el Cloud Funcitions de Firebase dejo de ser gr
   correspondiente al endpoint de nuestro servicio de functions en la nube y el cual es el que 
   usaremos cuando la aplicación este desplegada en internet
   
-  NOTA IMPORTANTE: Para ejecutar este comando debemos estar a nivel de la raiz del proyecto y no 
-                   dentro de la carpeta functions, ya que para algunas cosas tenemos que estar 
-                   dentro de ella pero para este proceso de despliegue no.
+  NOTA IMPORTANTE 1: Para ejecutar este comando debemos estar a nivel de la raiz del proyecto y no 
+                    dentro de la carpeta functions, ya que para algunas cosas tenemos que estar 
+                    dentro de ella pero para este proceso de despliegue no.
+
+  NOTA IMPORTANTE 2: Adicionalmente hay que tener en cuenta que al ejecutar este comando puede darnos
+                    errores causados debido a que los comentarios o líneas de código supern 80 posiciones
+                    que hayan espacios al final, que se usen comillas sencillas por lo tanto para arreglar
+                    y evitar estos errores es necesario agregar unas reglas y configuraciones en los siguientes
+                    archivos:
+
+                    1. En el archivo package.json en el apartado "scripts" hay que agregar la siguiente línea al final
+                       del arreglo:
+                      
+                       "lint": "eslint --fix --ext .js,.ts ."
+
+                    2. En el archivo .eslintrc.js en el apartado "rules" del objeto agregamos las siguientes líneas: 
+
+                       "@typescript-eslint/no-var-requires": 0,
+                       "max-len": ["error", {code: 140}],
+                    
+                    3. Ya con esto agregado podemos proceder a ejecutar el comando firebase deploy y esto automáticamente
+                       corregiría los errores automáticamente como el tema de las comillas sencillas entre otros y procede 
+                       a hacer el despliegue a firebase sin problemas.
+
 -----------------------------------------------------------------------------------------------------------
 
 	firebase deploy

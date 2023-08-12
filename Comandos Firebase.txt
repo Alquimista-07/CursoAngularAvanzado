@@ -1,10 +1,12 @@
+**********************************************
 COMANDOS FUNCTIONS FIREBASE
+**********************************************
 
 NOTA: Hay que tener en cuenta que el Cloud Funcitions de Firebase dejo de ser gratuito, por lo tanto es necesario
       crear una cuenta de facturación asociada a un método de pago y cambiar el plan al plan de pago por uso.
-	  La unica ventaja es que para usar el servicio gratuito se cuenta con unos topes bastante altos por día los
-	  cuales si se sobrepasan si inicia el cobro por lo tanto hay que tener en cuenta y si no cambiar el plan cuando
-	  no se este usando el servicio o eliminar el proyecto.
+	    La unica ventaja es que para usar el servicio gratuito se cuenta con unos topes bastante altos por día los
+	    cuales si se sobrepasan si inicia el cobro por lo tanto hay que tener en cuenta y si no cambiar el plan cuando
+	    no se este usando el servicio o eliminar el proyecto.
 
 -----------------------------------------------------------------------------------------------------------
 * El siguiente comando me permite loguear en firebase, para poder dar inicio con el proyecto
@@ -31,6 +33,10 @@ NOTA: Hay que tener en cuenta que el Cloud Funcitions de Firebase dejo de ser gr
 * El siguiente comando me permite hacer el despliegue a producción y nos va a entregar una url
   correspondiente al endpoint de nuestro servicio de functions en la nube y el cual es el que 
   usaremos cuando la aplicación este desplegada en internet
+  
+  NOTA IMPORTANTE: Para ejecutar este comando debemos estar a nivel de la raiz del proyecto y no 
+                   dentro de la carpeta functions, ya que para algunas cosas tenemos que estar 
+                   dentro de ella pero para este proceso de despliegue no.
 -----------------------------------------------------------------------------------------------------------
 
 	firebase deploy
@@ -61,7 +67,7 @@ NOTA: Hay que tener en cuenta que el Cloud Funcitions de Firebase dejo de ser gr
 
   NOTA: Hay que tener en cuenta que para ejecutar este comando debemos estar dentro del directorio de functions.
         Adicionalmente si el comando no funciona lo más probable es que el paquete no este instalado por lo tanto
-		para instalarlo usamos el comando npm install -g typescript tsc-watch
+		    para instalarlo usamos el comando npm install -g typescript tsc-watch
 -----------------------------------------------------------------------------------------------------------
 
 	tsc --watch

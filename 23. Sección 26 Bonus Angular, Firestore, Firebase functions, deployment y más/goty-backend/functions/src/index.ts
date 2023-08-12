@@ -133,6 +133,48 @@ app.get('/goty', async(req, res) => {
 
 });
 
+// Actualizar los votos de un juego
+app.post('/goty/:id', async(req, res) => {
+
+  // Extraemos el id
+  const id = req.params.id;
+
+  // Hacemos referencia al documento
+  const gameRef = db.collection('goty').doc( id );
+
+  // Obtenemos el snapshot del documento en particular
+  const gameSnap = await gameRef.get();
+
+  // Validamos para revisar que el id que enviaron exista o no y si no existe 
+  // mandamos un mensaje de error
+  if( !gameSnap.exists ){
+    res.status(404).json({
+      ok: false,
+      msg: 'No existe un juego con ese ID ' + id
+    });
+  } else {
+    // Hacemos una referencia al objeto para actualizarlo
+    // y en caso de que no exista le mandamos o que los votos
+    // sean cero pero pues eso no va a suceder pero para que firebase no 
+    // pelee de que puede ser undefined lo indicamos de esa manera.
+    const antes = gameSnap.data() || { votos: 0 };
+
+    // Lo actualizamos indicando el await para que espere y no emita la respuesta 
+    // hasta que no se actualice ya que el update es una promesa
+    await gameRef.update({
+      votos: antes.votos + 1
+    });
+
+    // Una vez actualizado mandamos la respuesta
+    res.json({
+      ok: true,
+      msg: `Gracias por tu voto a ${ antes.name }`
+    });
+
+  }
+
+});
+
 // Hacemos la configuración para decirle a firebase que ahora tiene un 
 // servidor de Express corriendo en algún lugar
 export const api = onRequest( app );

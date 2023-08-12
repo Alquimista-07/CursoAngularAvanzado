@@ -36,6 +36,9 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+// Creamos una referencia a la base de datos
+const db = admin.firestore();
+
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
@@ -43,4 +46,39 @@ export const helloWorld = onRequest((request, response) => {
   response.json({
     mensaje: 'Hola Mundo desde Funciones de Firebase!!!...'
   });
+});
+
+// Función para obtener la información de la colección goty desde firestore
+export const getGOTY = onRequest( async(request, response) => {
+
+  //----------------------------------------------------------------------
+  // NOTA: Este código dentro de esta sección marcada con '----' nos permite obtener valores 
+  //       que vienen como parámetro en el url
+  //
+  // const nombre = request.query.nombre || 'Sin Nombre';
+  //
+  // NOTA: Con el .status podemos enviar el estado que queramos, pero si no colocamos el .status
+  //       por defecto va a colocar 200
+  // response.status(200).json({
+    //   nombre
+    // });
+  //----------------------------------------------------------------------
+
+  // Creamos una referencia a la colección goty que creamos en firestore
+  const gotyRef = db.collection('goty');
+
+  // Como por el momento no nos intersa tener los datos en tiempo real sino la información al 
+  // momento de realizar la petición, basicamente lo que necesitamos es un snapshot
+  // de los datos, por lo tanto creamos el snapshot y como no es un proceso síncrono
+  // usamos el asyn y awiat para esperar a que responda algo antes de continuar 
+  const docsSnap = await gotyRef.get();
+
+  // Cremaos una constante que va acontener todos los documentos procesados.
+  // Para ello pasamos el snapshot por el map que contiene todos los arreglos 
+  // y que va a regresar un nuevo arreglo en base a la condición que indiquemos
+  // dentro de dicho método
+  const juegos = docsSnap.docs.map( doc => doc.data() );
+
+  response.json( juegos );
+
 });

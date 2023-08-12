@@ -1,5 +1,9 @@
 import {onRequest} from "firebase-functions/v2/https";
 
+// Importación de Express y cors
+import * as express from 'express';
+import * as cors from 'cors';
+
 //-----------------------------------------------
 // TRABAJAR CON FIREBASE DE FORMA LOCAL y REMOTA
 //-----------------------------------------------
@@ -82,3 +86,53 @@ export const getGOTY = onRequest( async(request, response) => {
   response.json( juegos );
 
 });
+
+//---------------------------------------------------------------------------------------------
+// Express
+//---------------------------------------------------------------------------------------------
+// Instalaciones necesarias para el servidor de express: 
+// OJO: Hay que estar dentro de la carpeta functions para hacer las instalaciones.
+//
+// 1. npm install express 
+// 2. npm install cors
+//
+// Comando abreviado: npm install express cors
+// 
+// Instalación para manejar los tipados solo en desarrollo ya que no 
+// necesitamos que se suban a producción: 
+//
+// 1. npm install @types/express --save-dev
+// 2. npm install @types/cors --save-dev
+// 
+//---------------------------------------------------------------------------------------------
+// Configuración de express
+const app = express();
+
+// Cors para que la aplicación acepte peticiones de otros dominios
+app.use( cors({ origin: true }) );
+
+// Obtener registros
+app.get('/goty', async(req, res) => {
+
+  // Creamos una referencia a la colección goty que creamos en firestore
+  const gotyRef = db.collection('goty');
+
+  // Como por el momento no nos intersa tener los datos en tiempo real sino la información al 
+  // momento de realizar la petición, basicamente lo que necesitamos es un snapshot
+  // de los datos, por lo tanto creamos el snapshot y como no es un proceso síncrono
+  // usamos el asyn y awiat para esperar a que responda algo antes de continuar 
+  const docsSnap = await gotyRef.get();
+
+  // Cremaos una constante que va acontener todos los documentos procesados.
+  // Para ello pasamos el snapshot por el map que contiene todos los arreglos 
+  // y que va a regresar un nuevo arreglo en base a la condición que indiquemos
+  // dentro de dicho método
+  const juegos = docsSnap.docs.map( doc => doc.data() );
+
+  res.json( juegos );
+
+});
+
+// Hacemos la configuración para decirle a firebase que ahora tiene un 
+// servidor de Express corriendo en algún lugar
+export const api = onRequest( app );

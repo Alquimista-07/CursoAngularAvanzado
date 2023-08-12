@@ -24,7 +24,7 @@ import {onRequest} from "firebase-functions/v2/https";
 //       7. Adicionalmente lo que vamos a hacer es copiar dicho archivo a nuestra carpeta lib y src dentro del proyecto que estamos
 //          desarrollando.
 //
-// NOTA IMPORTANTE: Dicho archivo .json y que renombramos comoserviceAccountKey no lo debemos dejar expuesto ya que con dicho archivo 
+// NOTA IMPORTANTE: Dicho archivo .json y que renombramos como serviceAccountKey no lo debemos dejar expuesto ya que con dicho archivo 
 //                  continene las credenciales de la base de datos, dejando una puesta abierta para que cualquier persona mal intencionada
 //                  haga estragos sobre nuestra base de datos o servico de firebase.
 //

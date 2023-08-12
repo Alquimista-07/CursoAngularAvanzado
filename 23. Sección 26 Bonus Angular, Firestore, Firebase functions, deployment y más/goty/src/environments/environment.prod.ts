@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  url: 'https://api-cdldq5qg7a-uc.a.run.app'
 };

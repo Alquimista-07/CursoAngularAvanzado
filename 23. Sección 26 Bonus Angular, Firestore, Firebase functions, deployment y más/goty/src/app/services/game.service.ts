@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 // Operadores de rxjs
-import { of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 // Importamos los environments
 import { environment } from '../../environments/environment';
@@ -59,7 +59,15 @@ export class GameService {
     // NOTA: Generalmente las peiticones post envían la información en el body pero como en este
     //       caso no estamos mandando nada entonces le mandamo un body vacío indicandolo con los
     //       {} para que Angular no nos marque error.
-    return this.http.post(`${environment.url}/goty/${id}`, {});
+    return this.http.post(`${environment.url}/goty/${id}`, {})
+               .pipe(
+                // Usamos otro operador de rxjs para manejar el error en caso de que el id del juego no exista
+                catchError( err => {
+                  console.log('Error en la petición');
+                  console.log(err);
+                  return of( err.error )
+                })
+               );
 
   }
 

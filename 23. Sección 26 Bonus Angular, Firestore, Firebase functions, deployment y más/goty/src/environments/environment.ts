@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:5000/goty-firestore-d2056/us-central1/api'
+  url: 'http://localhost:5000/goty-firestore-d2056/us-central1/api',
+  firebase: {
+    apiKey: "AIzaSyDOGBaFeQ4IXowTiOYR0eCd6nSwSkFfeJo",
+    authDomain: "goty-firestore-d2056.firebaseapp.com",
+    projectId: "goty-firestore-d2056",
+    storageBucket: "goty-firestore-d2056.appspot.com",
+    messagingSenderId: "68305621318",
+    appId: "1:68305621318:web:ddf654e175ea77fd08d547"
+  }
 };
 
 /*

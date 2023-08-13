@@ -38,31 +38,31 @@ export class GraficoBarraHorizontalComponent implements OnDestroy {
 
   colorScheme = 'nightLights';
 
-  intervalo;
+  // intervalo;
 
   constructor() {
 
-    this.intervalo = setInterval( () => {
+    // this.intervalo = setInterval( () => {
 
-      console.log('tick');
+    //   console.log('tick');
 
-      const newResults = [ ...this.results ];
+    //   const newResults = [ ...this.results ];
 
-      // Barremos el objeto de resultados y cambiamos los valores en tiempo real en un intervalo de tiempo
-      for( let i in newResults ){
-        newResults[i].value = Math.round(Math.random() * 500);
-      }
+    //   // Barremos el objeto de resultados y cambiamos los valores en tiempo real en un intervalo de tiempo
+    //   for( let i in newResults ){
+    //     newResults[i].value = Math.round(Math.random() * 500);
+    //   }
 
-      this.results = [ ...newResults ];
+    //   this.results = [ ...newResults ];
 
-    }, 1500);
+    // }, 1500);
 
   }
 
   // Implementamos el ngOnDestroy para terminar el intervalo y de esta forma evitar la fuga de memoria
   // ya que este intervalo queda activo aún cuando cambiemos de pantalla
   ngOnDestroy(): void {
-    clearInterval( this.intervalo );
+    // clearInterval( this.intervalo );
   }
 
   onSelect(event: any) {

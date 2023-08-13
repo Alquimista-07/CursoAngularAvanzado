@@ -4,7 +4,9 @@
 <div class="row">
     <div class="col">
 
-        <app-grafico-barra-horizontal></app-grafico-barra-horizontal>
+        <!--Mandamos la información de los juegos asignandosela a los results y que sabemos que se pasa de componente padre
+            a componente hijo (grafica-barra-horizontal.ts y que le colocamos el decorador @Input para poder hacer esto). -->
+        <app-grafico-barra-horizontal [results]="juegos"></app-grafico-barra-horizontal>
 
     </div>
 </div>

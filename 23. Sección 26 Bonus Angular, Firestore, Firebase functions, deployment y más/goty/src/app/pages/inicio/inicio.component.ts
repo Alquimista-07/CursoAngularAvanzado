@@ -19,6 +19,9 @@ import { Game } from 'src/app/interfaces/interfaces';
 })
 export class InicioComponent implements OnInit {
 
+  // Pripieda para cargar los juegos
+  juegos: any[] = [];
+
   constructor( private db: AngularFirestore ) { }
 
   ngOnInit(): void {
@@ -76,8 +79,9 @@ export class InicioComponent implements OnInit {
 
           })
         )
-        .subscribe( resp => {
-          console.log(resp);
+        .subscribe( juegos => {
+          console.log(juegos);
+          this.juegos = juegos;
         })
 
   }

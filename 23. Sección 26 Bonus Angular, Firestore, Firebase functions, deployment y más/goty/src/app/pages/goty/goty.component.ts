@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/app/interfaces/interfaces';
 
+// Importación Sweet Alert para mostrar las ventanas emergentes de confirmación
+import Swal from 'sweetalert2';
+
 // Importación servicio
 import { GameService } from 'src/app/services/game.service';
 
@@ -21,6 +24,17 @@ export class GotyComponent implements OnInit {
           this.juegos = games;
           console.log(this.juegos);
         })
+  }
+
+  votarJuego( juego: Game ){
+    // console.log(juego);
+    this.gameService.votarJuego( juego.id )
+        .subscribe( (resp: any) => {
+          if( resp.ok ){
+            Swal.fire( 'Gracias', resp.msg, 'success' );
+          }
+        })
+
   }
 
 }

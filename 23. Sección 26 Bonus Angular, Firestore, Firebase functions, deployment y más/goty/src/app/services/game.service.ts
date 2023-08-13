@@ -53,4 +53,14 @@ export class GameService {
 
   }
 
+  // Votar por juego
+  votarJuego(id: string) {
+
+    // NOTA: Generalmente las peiticones post envían la información en el body pero como en este
+    //       caso no estamos mandando nada entonces le mandamo un body vacío indicandolo con los
+    //       {} para que Angular no nos marque error.
+    return this.http.post(`${environment.url}/goty/${id}`, {});
+
+  }
+
 }
